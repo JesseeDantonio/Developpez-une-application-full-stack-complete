@@ -1,0 +1,73 @@
+Project sample_project {
+    database_type: 'PostgreSQL'
+    Note: 'Sample database schema'
+}
+
+Table user [headercolor: #27AE60] {
+    id integer [primary key, increment]
+    username varchar(50) [not null, unique]
+    email varchar(100) [not null, unique]
+    password varchar(255) [not null]
+    updated_at timestamp [default: `now()`]
+    created_at timestamp [default: `now()`]
+
+    Note: 'User accounts'
+}
+
+Table theme_subscription {
+  user_id integer [not null, ref: > user.id]
+  theme_id integer [not null, ref: > theme.id]
+  created_at timestamp [default: `now()`]
+
+  // On utilise la technique vue précédemment pour empêcher
+  // un utilisateur de s'abonner deux fois au même thème
+  indexes {
+    (user_id, theme_id) [pk]
+  }
+
+  Note: 'Gère les abonnements des utilisateurs aux thèmes'
+}
+
+Table theme {
+    id integer [primary key, increment]
+    name varchar(100)
+    description text
+
+    updated_at timestamp [default: `now()`]
+    created_at timestamp [default: `now()`]
+
+    Note: 'Theme user'
+}
+
+Table article_theme {
+    theme_id integer [not null, ref: <> theme.id]
+    article_id integer [not null, ref: <> article.id]
+
+    indexes {
+        (theme_id, article_id) [pk]
+    }
+
+    Note: 'Link many-to-many'
+}
+
+Table article [headercolor: #3498DB] {
+    id integer [primary key, increment]
+    user_id integer [not null, ref: > user.id]
+    title varchar(150)
+    content text
+    updated_at timestamp [default: `now()`]
+    created_at timestamp [default: `now()`]
+
+    Note: 'Article user'
+}
+
+Table comment {
+    id integer [primary key, increment]
+    user_id integer [not null, ref: > user.id]
+    article_id integer [not null, ref: > article.id]
+    content text
+    updated_at timestamp [default: `now()`]
+    created_at timestamp [default: `now()`]
+
+    Note: 'Comment user'
+}
