@@ -15,12 +15,11 @@ Table user [headercolor: #27AE60] {
 }
 
 Table theme_subscription {
-  user_id integer [not null, ref: > user.id]
-  theme_id integer [not null, ref: > theme.id]
+  user_id integer [not null, ref: <> user.id]
+  theme_id integer [not null, ref: <> theme.id]
   created_at timestamp [default: `now()`]
 
-  // On utilise la technique vue précédemment pour empêcher
-  // un utilisateur de s'abonner deux fois au même thème
+  //  empêcher un utilisateur de s'abonner deux fois au même thème
   indexes {
     (user_id, theme_id) [pk]
   }
