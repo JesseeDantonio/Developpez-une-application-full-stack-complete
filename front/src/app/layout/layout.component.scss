@@ -1,0 +1,17 @@
+nav {
+    display: flex;
+    height: 15vh;
+    width: 100%;
+    padding: 10px;
+}
+
+.logo {
+    cursor: pointer;
+    max-height: 10%;
+}
+
+.logo img {
+    width: 30%;
+    /* Supprime l'espace fantôme sous l'image */
+    display: block;
+}
