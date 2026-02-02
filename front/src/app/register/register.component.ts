@@ -4,7 +4,8 @@ import { Component, OnInit } from '@angular/core';
     selector: 'app-register',
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: []
 })
 export class RegisterComponent implements OnInit {
 
