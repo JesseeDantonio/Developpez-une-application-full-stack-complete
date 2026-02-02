@@ -1,0 +1,13 @@
+@import "./../../styles/styles.scss";
+
+ul {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 0;
+}
+
+input {
+    border-radius: 6px;
+    border: 1px solid;
+}
