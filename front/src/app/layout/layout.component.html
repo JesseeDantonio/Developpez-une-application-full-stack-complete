@@ -1,17 +1,49 @@
 <!-- layout.component.html -->
-<header>
-  <nav>
-    <div class="logo" (click)="goToHome()">
-      <img src="/assets/logo_p6.png" alt="logo" />
-    </div>
-    
-  </nav>
-</header>
 
-<main class="main-container">
-  <router-outlet></router-outlet>
-</main>
+@if (isDesktop$ | async) {
+<div class="desktop-view">
+  <header>
+    <nav>
+      <div class="logo" (click)="goToHome()">
+        <img src="/assets/logo_p6.png" alt="logo" />
+      </div>
 
-<footer>
+    </nav>
+  </header>
 
-</footer>
+  <main class="main-container">
+    <button id="back-btn" (click)="goBack()" class="reset-button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        class="lucide lucide-move-left-icon lucide-move-left">
+        <path d="M6 8L2 12L6 16" />
+        <path d="M2 12H22" />
+      </svg>
+    </button>
+
+    <router-outlet></router-outlet>
+  </main>
+</div>
+} @else {
+<div class="mobile-view">
+  <button id="back-btn" (click)="goBack()" class="reset-button">
+    <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      class="lucide lucide-move-left-icon lucide-move-left">
+      <path d="M6 8L2 12L6 16" />
+      <path d="M2 12H22" />
+    </svg>
+  </button>
+  <header>
+    <nav>
+      <div class="logo" (click)="goToHome()">
+        <img src="/assets/logo_p6.png" alt="logo" />
+      </div>
+    </nav>
+  </header>
+
+  <main class="main-container">
+    <router-outlet></router-outlet>
+  </main>
+</div>
+}

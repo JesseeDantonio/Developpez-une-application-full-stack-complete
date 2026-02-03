@@ -1,3 +1,5 @@
+@import "./../../styles/styles.scss";
+
 nav {
     display: flex;
     height: 15vh;
@@ -12,6 +14,26 @@ nav {
 
 .logo img {
     width: 30%;
-    /* Supprime l'espace fantôme sous l'image */
-    display: block;
+}
+
+#back-btn {
+    margin: 1rem;
+}
+
+@media (max-width: $breakpoint-tablette) {
+    nav {
+        padding: 0;
+    }
+
+
+
+    .logo {
+        max-height: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .logo img {
+        width: auto;
+    }
 }
