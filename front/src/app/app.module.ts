@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
-import { LayoutComponent } from "./layout/layout.component";
+import { LayoutComponent } from './features/feed/layout/layout.component';
 
 @NgModule({
   declarations: [],
