@@ -1,4 +1,4 @@
-@import "./../../styles/styles.scss";
+@import "./../../../../styles/styles.scss";
 
 ul {
     display: flex;
@@ -10,7 +10,7 @@ ul {
     justify-content: flex-start;
 }
 
-#login-btn {
+#register-btn {
     background-color: #7763c5;
     font-size: medium;
     font-weight: bold;
@@ -24,13 +24,13 @@ ul {
 }
 
 @media (max-width: $breakpoint-mobile) {
-    input {
+    input{
         width: 70vw;
     }
 }
 
 @media (max-width: $breakpoint-tablette) {
-    input {
+    input{
         width: 70vw;
     }
 }
