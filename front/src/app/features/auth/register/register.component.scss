@@ -1,4 +1,5 @@
-@import "./../../../../styles/styles.scss";
+@use "./../../../../styles/styles.scss" as *;
+@use "./../../../../styles/variables.scss" as v;
 
 ul {
     display: flex;
@@ -23,13 +24,13 @@ ul {
     padding-bottom: 10px;
 }
 
-@media (max-width: $breakpoint-mobile) {
+@media (max-width: v.$breakpoint-mobile) {
     input{
         width: 70vw;
     }
 }
 
-@media (max-width: $breakpoint-tablette) {
+@media (max-width: v.$breakpoint-tablet) {
     input{
         width: 70vw;
     }
