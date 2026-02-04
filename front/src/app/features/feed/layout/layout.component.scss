@@ -1,4 +1,4 @@
-@import "./../../../../styles/styles.scss";
+@use "./../../../../styles/variables.scss" as v;
 
 nav {
     display: flex;
@@ -20,12 +20,10 @@ nav {
     margin: 1rem;
 }
 
-@media (max-width: $breakpoint-tablette) {
+@media (max-width: v.$breakpoint-tablet) {
     nav {
         padding: 0;
     }
-
-
 
     .logo {
         max-height: 100%;

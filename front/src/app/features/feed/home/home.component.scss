@@ -1,4 +1,5 @@
-@import "./../../../../styles/styles.scss";
+@use "./../../../../styles/styles.scss" as *;
+@use "./../../../../styles/variables.scss" as v;
 
 #action {
   display: flex;
@@ -19,7 +20,7 @@
   padding-bottom: 10px;
 }
 
-@media (max-width: $breakpoint-mobile) {
+@media (max-width: v.$breakpoint-mobile) {
   img {
     width: 100%;
     margin-top: 10vh;
