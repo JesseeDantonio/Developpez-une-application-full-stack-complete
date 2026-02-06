@@ -1,0 +1,29 @@
+# ⚠️ Attention : 
+# Les identifiants de connexion fournis dans ce projet sont exclusivement réservés à un usage local, pour l'essai et la validation du projet.  
+# Ils ne doivent en aucun cas être utilisés en production ou pour des données sensibles.
+
+services:
+  db:
+    image: mysql
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: aJ7#x9P!sQ2^wLmZ
+      MYSQL_DATABASE: ChaTop
+      MYSQL_USER: usr_vQ8z
+      MYSQL_PASSWORD: mN!8pB@4zTq#2wLs
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./mysql-config:/etc/mysql/conf.d
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      - PMA_ARBITRARY=1
+
+volumes:
+  db_data:
