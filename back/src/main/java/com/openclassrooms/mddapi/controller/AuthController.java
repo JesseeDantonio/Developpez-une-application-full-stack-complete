@@ -16,7 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
-public class AuthController {
+public class  AuthController {
     private final AuthService authService;
     public AuthController(AuthService authService) {
         this.authService = authService;
@@ -26,8 +26,8 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody UserCreateDTO userCreateDTO) {
         try {
-            TokenDTO tokens = authService.register(userCreateDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(tokens);
+            authService.register(userCreateDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (RuntimeException e) {
             return ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED)

@@ -35,15 +35,11 @@ public class AuthService {
         this.jsonWebToken = jsonWebToken;
     }
 
-    public TokenDTO register(UserCreateDTO userAuth) {
+    public void register(UserCreateDTO userAuth) {
         Optional<UserEntity> user = userRepo.findByEmail(userAuth.getEmail());
         if (user.isPresent()) {
             throw new RuntimeException("Utilisateur déjà existant");
         }
-
-        TokenDTO dto = new TokenDTO(
-                jsonWebToken.generateToken(userAuth.getEmail() , ACCESS_TOKEN_EXPIRATION)
-        );
 
         userAuth.setEmail(userAuth.getEmail());
         userAuth.setName(userAuth.getName());
@@ -57,8 +53,6 @@ public class AuthService {
         userEntity.setCreatedAt(LocalDate.now().toString());
 
         userRepo.save(userEntity);
-
-        return dto;
     }
 
 
@@ -72,15 +66,8 @@ public class AuthService {
         }
 
         String accessToken = jsonWebToken.generateToken(user.get().getEmail(), ACCESS_TOKEN_EXPIRATION);
-        String refreshTokenStr = jsonWebToken.generateToken(user.get().getEmail(), REFRESH_TOKEN_EXPIRATION);
 
-        RefreshTokenEntity refreshToken = new RefreshTokenEntity();
-        refreshToken.setUser(user.get());
-        refreshToken.setToken(refreshTokenStr);
-        refreshToken.setExpirationDate(Instant.now().plusMillis(REFRESH_TOKEN_EXPIRATION));
-        refreshTokenRepo.save(refreshToken);
-
-        return new TokenDTO(accessToken, refreshTokenStr);
+        return new TokenDTO(accessToken);
     }
 
     public UserDTO me(String email) {
