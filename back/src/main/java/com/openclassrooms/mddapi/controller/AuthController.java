@@ -16,7 +16,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
-//@Tag(name = "Authentification", description = "Opérations sur l'authentification")
 public class AuthController {
     private final AuthService authService;
     public AuthController(AuthService authService) {
