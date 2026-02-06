@@ -27,13 +27,11 @@ public class AuthService {
 
     private final UserRepository userRepo;
     private final PasswordEncoder passwordEncoder;
-    private final RefreshTokenRepository refreshTokenRepo;
     private final JsonWebToken jsonWebToken;
 
-    public AuthService(UserRepository userRepo, PasswordEncoder passwordEncoder, RefreshTokenRepository refreshTokenRepo, JsonWebToken jsonWebToken) {
+    public AuthService(UserRepository userRepo, PasswordEncoder passwordEncoder, JsonWebToken jsonWebToken) {
         this.userRepo = userRepo;
         this.passwordEncoder = passwordEncoder;
-        this.refreshTokenRepo = refreshTokenRepo;
         this.jsonWebToken = jsonWebToken;
     }
 
@@ -44,8 +42,7 @@ public class AuthService {
         }
 
         TokenDTO dto = new TokenDTO(
-                jsonWebToken.generateToken(userAuth.getEmail() , ACCESS_TOKEN_EXPIRATION),
-                jsonWebToken.generateToken(userAuth.getEmail() , REFRESH_TOKEN_EXPIRATION)
+                jsonWebToken.generateToken(userAuth.getEmail() , ACCESS_TOKEN_EXPIRATION)
         );
 
         userAuth.setEmail(userAuth.getEmail());
@@ -60,13 +57,6 @@ public class AuthService {
         userEntity.setCreatedAt(LocalDate.now().toString());
 
         userRepo.save(userEntity);
-
-        RefreshTokenEntity refreshToken = new RefreshTokenEntity();
-        refreshToken.setUser(userEntity);
-        refreshToken.setToken(dto.getRefresh_token());
-        refreshToken.setExpirationDate(Instant.now().plusMillis(REFRESH_TOKEN_EXPIRATION));
-
-        refreshTokenRepo.save(refreshToken);
 
         return dto;
     }
