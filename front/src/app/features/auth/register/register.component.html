@@ -1,25 +1,25 @@
 <div class="center-page">
     <h1>Inscription</h1>
 
-    <form>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <ul class="reset-ul">
             <li>
                 <div>
                     <label for="name">Nom d'utilisateur</label>
                 </div>
-                <input type="text" id="username" name="user_username" />
+                <input type="text" id="username" name="user_username" formControlName="username"/>
             </li>
             <li>
                 <div>
                     <label for="mail">Adresse e-mail</label>
                 </div>
-                <input type="email" id="mail" name="user_mail" />
+                <input type="email" id="mail" name="user_mail" formControlName="email"/>
             </li>
             <li>
                 <div>
                     <label for="password">Mot de passe</label>
                 </div>
-                <input type="password" name="user_password"/>
+                <input type="password" name="user_password" formControlName="password"/>
             </li>
         </ul>
         <div class="center-button">
