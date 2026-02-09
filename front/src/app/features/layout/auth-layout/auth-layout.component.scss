@@ -1,0 +1,124 @@
+@use "./../../../../styles/variables.scss" as v;
+
+.navbar {
+  display: flex;
+  padding: 1rem;
+  justify-content: space-between;
+}
+
+img {
+  width: 10%;
+  cursor: pointer;
+}
+
+#burger-action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1vw;
+}
+
+.logout {
+  color: red;
+}
+
+#burger-action button {
+  font-size: x-large;
+}
+
+/* ======== BOUTON BURGER ======== */
+.burger {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  z-index: 1100;
+  justify-content: center;
+  align-items: center;
+}
+
+.burger span {
+  width: 30px;
+  height: 3px;
+  background: black;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Animation du burger */
+.burger span.open:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.burger span.open:nth-child(2) {
+  opacity: 0;
+}
+
+.burger span.open:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* ======== OVERLAY (fond semi-transparent) ======== */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1050;
+}
+
+/* ======== MENU MOBILE ======== */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 70%;
+  height: 100%;
+  background: white;
+  box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  text-align: center;
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Bouton fermer */
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 5vh;
+  cursor: pointer;
+}
+
+/* Liens du menu */
+.mobile-menu ul {
+  margin-top: 10vh;
+}
+
+.mobile-menu li {
+  margin: 20px 0;
+  font-size: x-large;
+}
+
+.mobile-menu a {
+  text-decoration: none;
+  color: var(--text);
+  font-size: 3vh;
+  font-weight: bold;
+}
+
+@media (max-width: v.$breakpoint-mobile) {
+  img {
+    width: 20%;
+  }
+}
+
+@media (max-width: v.$breakpoint-tablet) {}
+
