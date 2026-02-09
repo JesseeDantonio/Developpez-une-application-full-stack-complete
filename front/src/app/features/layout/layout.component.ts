@@ -12,9 +12,10 @@ import { map } from 'rxjs';
 })
 export class LayoutComponent implements OnInit {
   private breakpointObserver = inject(BreakpointObserver);
+  public menuOpen = false;
 
   isDesktop$ = this.breakpointObserver
-    .observe([Breakpoints.Tablet, Breakpoints.Large, Breakpoints.XLarge])
+    .observe([Breakpoints.Medium, Breakpoints.Large, Breakpoints.XLarge])
     .pipe(map((result) => result.matches));
 
   constructor(

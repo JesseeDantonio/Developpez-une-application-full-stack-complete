@@ -1,4 +1,4 @@
-@use "./../../../../styles/variables.scss" as v;
+@use "./../../../styles/variables.scss" as v;
 
 nav {
     display: flex;
@@ -9,7 +9,6 @@ nav {
 
 .logo {
     cursor: pointer;
-    max-height: 10%;
 }
 
 .logo img {
@@ -20,13 +19,19 @@ nav {
     margin: 1rem;
 }
 
+@media (max-width: v.$breakpoint-mobile) {
+    
+}
+
 @media (max-width: v.$breakpoint-tablet) {
     nav {
         padding: 0;
+        max-width: 100%;
     }
 
     .logo {
         max-height: 100%;
+        width: 100%;
         display: flex;
         justify-content: center;
     }
