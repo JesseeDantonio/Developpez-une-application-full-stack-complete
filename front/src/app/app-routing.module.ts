@@ -4,8 +4,8 @@ import { LoginComponent } from './features/auth/login/login.component';
 import { RegisterComponent } from './features/auth/register/register.component';
 import { HomeComponent } from './features/home/home.component';
 import { LayoutComponent } from './features/layout/layout.component';
-import { FeedComponent } from './features/feed/feed.component';
 import { AuthLayoutComponent } from './features/layout/auth-layout/auth-layout.component';
+import { ArticleComponent } from './features/article/article.component';
 
 // consider a guard combined with canLoad / canActivate route option
 // to manage unauthenticated user to access private routes
@@ -30,7 +30,7 @@ export const routes: Routes = [
     path: '',
     component: AuthLayoutComponent,
     children: [
-      { path: 'feed', component: FeedComponent }
+      { path: 'article', component: ArticleComponent }
     ]
   }
 ];
