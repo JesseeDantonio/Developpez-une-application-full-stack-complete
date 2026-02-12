@@ -6,6 +6,11 @@ body {
   height: 100%;
 }
 
+app-root {
+  display: block; /* Important car app-root est une balise custom */
+  height: 100%;
+}
+
 body {
   margin: 0;
   padding: 0;
