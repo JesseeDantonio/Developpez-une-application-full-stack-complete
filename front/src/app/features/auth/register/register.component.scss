@@ -11,19 +11,6 @@ ul {
     justify-content: flex-start;
 }
 
-#register-btn {
-    background-color: #7763c5;
-    font-size: medium;
-    font-weight: bold;
-    letter-spacing: 0.1rem;
-    color: white;
-    border-radius: 8px;
-    padding-left: 25px;
-    padding-right: 25px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
 @media (max-width: v.$breakpoint-mobile) {
     input{
         width: 70vw;
