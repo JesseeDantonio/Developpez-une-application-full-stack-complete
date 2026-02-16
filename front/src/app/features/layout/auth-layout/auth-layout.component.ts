@@ -25,7 +25,13 @@ export class AuthLayoutComponent {
     this.menuOpen = false;
   }
 
-  public goToHome() {
-    this.router.navigate(['/feed']);
+  public goToArticles() {
+    this.router.navigate(['/article']);
+    this.closeMenu();
+  }
+
+  public goToThemes() {
+    this.router.navigate(['/theme']);
+    this.closeMenu();
   }
 }

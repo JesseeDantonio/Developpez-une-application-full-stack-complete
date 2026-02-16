@@ -1,12 +1,12 @@
 @if (isDesktop$ | async) {
 <header>
     <nav class="navbar">
-        <img src="/assets/logo_p6.png" alt="logo" />
+        <img (click)="goToArticles()" src="/assets/logo_p6.png" alt="logo" />
 
         <div id="burger-action">
             <button class="logout">Se déconnecter</button>
-            <button>Articles</button>
-            <button>Thèmes</button>
+            <button (click)="goToArticles()">Articles</button>
+            <button (click)="goToThemes()">Thèmes</button>
 
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -25,7 +25,7 @@
 } @else {
 <header>
     <nav class="navbar">
-        <img src="/assets/logo_p6.png" alt="logo" />
+        <img (click)="goToArticles()" src="/assets/logo_p6.png" alt="logo" />
 
         <button class="burger" (click)="menuOpen = !menuOpen">
             <span :class="{ 'open': menuOpen }"></span>
@@ -45,9 +45,9 @@
     <nav class="mobile-menu">
         <button class="close-btn" (click)="closeMenu()">✖</button>
         <ul>
-            <li><button class="logout">Se déconnecter</button></li>
-            <li><button><a href=""></a></button>Articles</li>
-            <li><button><a href=""></a></button>Thèmes</li>
+            <li><button class="logout" >Se déconnecter</button></li>
+            <li><button (click)="goToArticles()">Articles</button></li>
+            <li><button (click)="goToThemes()">Thèmes</button></li>
         </ul>
         <div id="profil">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
