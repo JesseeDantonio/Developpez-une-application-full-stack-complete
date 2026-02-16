@@ -7,6 +7,7 @@ import { LayoutComponent } from './features/layout/layout.component';
 import { AuthLayoutComponent } from './features/layout/auth-layout/auth-layout.component';
 import { ArticleComponent } from './features/article/article.component';
 import { ThemeComponent } from './features/theme/theme.component';
+import { CreateArticleComponent } from './features/create-article/create-article.component';
 
 // consider a guard combined with canLoad / canActivate route option
 // to manage unauthenticated user to access private routes
@@ -32,7 +33,8 @@ export const routes: Routes = [
     component: AuthLayoutComponent,
     children: [
       { path: 'article', component: ArticleComponent },
-      { path: 'theme', component: ThemeComponent }
+      { path: 'theme', component: ThemeComponent },
+      { path: 'create-article', component: CreateArticleComponent }
     ]
   }
 ];

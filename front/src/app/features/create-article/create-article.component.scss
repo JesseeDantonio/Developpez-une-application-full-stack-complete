@@ -1,0 +1,48 @@
+@use "./../../../styles/variables.scss" as v;
+
+
+.center-page {
+    justify-content: space-evenly;
+}
+
+form {
+    height: 100%;
+    width: auto;
+}
+
+#content {
+    width: 100%;
+    height: 100%;
+    resize: none;
+    border-color: #7763c5;
+    border-width: 2px;
+    border-radius: 8px;
+}
+
+#title {
+    width: 100%;
+}
+
+input {
+    border-color: #7763c5;
+    border-width: 2px;
+}
+
+ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    margin-bottom: 2rem;
+}
+
+@media (max-width: v.$breakpoint-mobile) {
+    form {
+        width: 70vw;
+    }
+}
+
+@media (max-width: v.$breakpoint-tablet) {
+    form {
+        width: 70vw;
+    }
+}
