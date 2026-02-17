@@ -1,0 +1,122 @@
+@use "./../../../styles/variables.scss" as v;
+
+.title {
+    font-weight: bold;
+    letter-spacing: 0.1rem;
+}
+
+.content {
+    margin-top: 2rem;
+}
+
+.comment-form,
+.comment-form__input {
+    width: 100%;
+}
+
+.comment-form__input {
+    height: 10vh;
+}
+
+.comment-form {
+    margin-top: 1rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.comment-card {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+}
+
+.comment-card__content {
+    background-color: #f5f5f5;
+    padding: 2rem;
+    width: 30vw;
+    border-radius: 8px;
+}
+
+.comments-section {
+    width: 50vw;
+    padding-top: 2rem;
+}
+
+#create-comment {
+    margin-top: 2rem;
+    width: 50vw;
+    height: 20vh;
+}
+
+article {
+    width: 50vw;
+    height: auto;
+    padding: 1rem;
+    // box-shadow: 0 2px 12px rgba(0, 0, 0, .35);
+    border-radius: 8px;
+}
+
+.detail {
+    display: flex;
+    gap: 10rem;
+}
+
+hr {
+    background-color: black;
+    width: 50%;
+}
+
+.center-page {
+    justify-content: start;
+}
+
+@media (max-width: v.$breakpoint-mobile) {
+    .detail {
+        flex-direction: column;
+        gap: 5rem;
+    }
+
+    .comment-card__content {
+        width: 80%;
+    }
+
+    .comment-form {
+        height: 15vh;
+    }
+
+    article {
+        width: 80vw;
+    }
+
+    .comment-card {
+        flex-direction: column;
+    }
+
+    .comments-section {
+        width: 80vw;
+    }
+}
+
+@media (max-width: v.$breakpoint-tablet) {
+    .detail {
+        gap: 5rem;
+    }
+
+    .comments-section {
+        width: 80vw;
+    }
+
+    .comment-card__content {
+        width: 60%;
+    }
+
+    .comment-form {
+        height: 15vh;
+    }
+
+    article,
+    hr {
+        width: 80vw;
+    }
+}
