@@ -71,10 +71,37 @@ hr {
     justify-content: start;
 }
 
+@media (max-width: v.$breakpoint-tablet) {
+    .detail {
+        gap: 5rem;
+    }
+
+    .comment-card__content {
+        width: 60vw;
+    }
+
+    .comments-section {
+        width: 80vw;
+    }
+
+    .comment-form {
+        height: 15vh;
+    }
+
+    article,
+    hr {
+        width: 80vw;
+    }
+}
+
 @media (max-width: v.$breakpoint-mobile) {
     .detail {
         flex-direction: column;
         gap: 5rem;
+    }
+
+    .comment-card {
+        width: 100%;
     }
 
     .comment-card__content {
@@ -96,27 +123,9 @@ hr {
     .comments-section {
         width: 80vw;
     }
-}
 
-@media (max-width: v.$breakpoint-tablet) {
-    .detail {
-        gap: 5rem;
-    }
-
-    .comments-section {
-        width: 80vw;
-    }
-
-    .comment-card__content {
-        width: 60%;
-    }
-
-    .comment-form {
-        height: 15vh;
-    }
-
-    article,
-    hr {
-        width: 80vw;
+    .comment-card__author {
+        text-align: end;
     }
 }
+
