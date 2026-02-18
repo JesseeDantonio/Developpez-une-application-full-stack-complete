@@ -9,6 +9,7 @@ import { ArticleComponent } from './features/article/article.component';
 import { ThemeComponent } from './features/theme/theme.component';
 import { CreateArticleComponent } from './features/create-article/create-article.component';
 import { DetailArticleComponent } from './features/detail-article/detail-article.component';
+import { ProfilComponent } from './features/profil/profil.component';
 
 // consider a guard combined with canLoad / canActivate route option
 // to manage unauthenticated user to access private routes
@@ -36,7 +37,8 @@ export const routes: Routes = [
       { path: 'article', component: ArticleComponent },
       { path: 'theme', component: ThemeComponent },
       { path: 'create-article', component: CreateArticleComponent },
-      { path: 'detail-article', component: DetailArticleComponent }
+      { path: 'detail-article', component: DetailArticleComponent },
+      { path: 'profil', component: ProfilComponent }
     ]
   }
 ];

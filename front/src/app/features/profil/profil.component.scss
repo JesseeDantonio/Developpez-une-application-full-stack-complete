@@ -1,0 +1,93 @@
+@use "./../../../styles/variables.scss" as v;
+
+form {
+    height: 100%;
+    width: auto;
+}
+
+input {
+    border-color: v.$primary-color;
+    border-width: 2px;
+}
+
+ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    margin-bottom: 2rem;
+    align-items: center;
+}
+
+hr {
+    width: 80vw;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+#themes {
+    display: flex;
+    padding: 2rem;
+    height: auto;
+    justify-content: space-around;
+    font-size: medium;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.title {
+    font-weight: bold;
+    letter-spacing: 0.1rem;
+}
+
+.action {
+    display: flex;
+    justify-content: center;
+}
+
+.content {
+    margin-top: 2rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+article {
+    width: 40vw;
+    height: auto;
+    background-color: #f5f5f5;
+    padding: 1rem;
+    // box-shadow: 0 2px 12px rgba(0, 0, 0, .35);
+    border-radius: 8px;
+}
+
+@media (max-width: v.$breakpoint-mobile) {
+
+    input {
+        width: 80vw;
+    }
+
+    form {
+        width: 100vw;
+    }
+
+        #articles {
+        flex-direction: column;
+        max-width: 100%;
+    }
+
+    article {
+        width: auto;
+    }
+}
+
+@media (max-width: v.$breakpoint-tablet) {
+
+    input {
+        width: 80vw;
+    }
+
+    form {
+        width: 100vw;
+    }
+}
