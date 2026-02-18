@@ -5,10 +5,10 @@
 
         <div id="burger-action">
             <button class="logout">Se déconnecter</button>
-            <button (click)="goToArticles()">Articles</button>
-            <button (click)="goToThemes()">Thèmes</button>
+            <button routerLink="/article" routerLinkActive="violet" (click)="goToArticles()">Articles</button>
+            <button routerLink="/theme" routerLinkActive="violet" (click)="goToThemes()">Thèmes</button>
 
-            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+            <svg routerLink="/profil" routerLinkActive="violet" (click)="goToProfil()" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                 class="lucide lucide-circle-user-icon lucide-circle-user">
                 <circle cx="12" cy="12" r="10" />
@@ -46,11 +46,11 @@
         <button class="close-btn" (click)="closeMenu()">✖</button>
         <ul>
             <li><button class="logout" >Se déconnecter</button></li>
-            <li><button (click)="goToArticles()">Articles</button></li>
-            <li><button (click)="goToThemes()">Thèmes</button></li>
+            <li><button routerLink="/article" routerLinkActive="violet" (click)="goToArticles()">Articles</button></li>
+            <li><button routerLink="/theme" routerLinkActive="violet" (click)="goToThemes()">Thèmes</button></li>
         </ul>
         <div id="profil">
-            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+            <svg routerLink="/profil" routerLinkActive="violet" (click)="goToProfil()" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                 class="lucide lucide-circle-user-icon lucide-circle-user">
                 <circle cx="12" cy="12" r="10" />
