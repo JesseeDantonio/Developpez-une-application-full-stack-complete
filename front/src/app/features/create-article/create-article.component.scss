@@ -17,10 +17,13 @@ form {
     border-color: v.$primary-color;
     border-width: 2px;
     border-radius: 8px;
+    height: 20vh;
+    font-size: larger;
 }
 
 #title {
     width: 100%;
+    font-size: larger;
 }
 
 input {
