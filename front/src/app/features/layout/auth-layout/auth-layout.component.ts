@@ -22,7 +22,7 @@ export class AuthLayoutComponent {
   constructor(private router: Router) {}
 
   public closeMenu() {
-    this.menuOpen = false;
+    if (this.menuOpen) this.menuOpen = false;
   }
 
   public goToArticles() {
@@ -32,6 +32,11 @@ export class AuthLayoutComponent {
 
   public goToThemes() {
     this.router.navigate(['/theme']);
+    this.closeMenu();
+  }
+
+  public goToProfil() {
+    this.router.navigate(['/profil']);
     this.closeMenu();
   }
 }
