@@ -25,6 +25,10 @@ export class AuthLayoutComponent {
     if (this.menuOpen) this.menuOpen = false;
   }
 
+  public isMenuOpen() {
+    return this.menuOpen;
+  }
+
   public goToArticles() {
     this.router.navigate(['/article']);
     this.closeMenu();

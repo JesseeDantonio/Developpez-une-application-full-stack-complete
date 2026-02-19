@@ -11,6 +11,10 @@ img {
   cursor: pointer;
 }
 
+svg {
+  cursor: pointer;
+}
+
 #burger-action {
   display: flex;
   justify-content: center;
@@ -70,8 +74,15 @@ img {
   left: 0;
   height: 100%;
   width: 100%;
+  pointer-events: none;
+  opacity: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: 1050;
+}
+
+.overlay.open {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /* ======== MENU MOBILE ======== */
@@ -88,6 +99,12 @@ img {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.mobile-menu.open {
+  transform: translateX(0);
 }
 
 #profil {
@@ -131,4 +148,3 @@ img {
 }
 
 @media (max-width: v.$breakpoint-tablet) {}
-
