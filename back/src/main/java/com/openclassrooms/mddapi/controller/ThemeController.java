@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.controller;
 
+import com.openclassrooms.mddapi.dto.in.CreateThemeDTO;
 import com.openclassrooms.mddapi.dto.out.ThemeDTO;
 import com.openclassrooms.mddapi.service.ThemeService;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class ThemeController {
 
     // POST /api/themes
     @PostMapping
-    public ThemeDTO createTheme(@RequestBody ThemeDTO themeDto) {
+    public CreateThemeDTO createTheme(@RequestBody CreateThemeDTO themeDto) {
         return themeService.createTheme(themeDto);
     }
 
