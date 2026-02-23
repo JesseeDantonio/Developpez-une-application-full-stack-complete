@@ -4,7 +4,9 @@ import com.openclassrooms.mddapi.dto.out.ThemeDTO;
 import com.openclassrooms.mddapi.entity.ThemeEntity;
 import com.openclassrooms.mddapi.repository.ThemeRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +28,32 @@ public class ThemeService {
         return themes;
     }
 
+    public ThemeDTO getThemeById(Integer id) {
+        return toDTO(themeRepository.findById(id).orElseThrow());
+    }
+
+    public ThemeDTO createTheme(ThemeDTO themeDto) {
+        themeRepository.save(toEntity(themeDto));
+        return themeDto;
+    }
+
+    public ThemeDTO updateTheme(Integer id, ThemeDTO themeDTO) {
+        ThemeEntity existingTh = themeRepository.findById(id).orElse(null);
+        if (existingTh != null) {
+            existingTh.setName(themeDTO.getName());
+            existingTh.setDescription(themeDTO.getDescription());
+            existingTh.setUpdatedAt(LocalDate.now().toString());
+            themeRepository.save(existingTh);
+            return toDTO(existingTh);
+        } else {
+            return null;
+        }
+    }
+
+    public void deleteTheme(Integer id) {
+        themeRepository.deleteById(id);
+    }
+
     private ThemeDTO toDTO(ThemeEntity entity) {
         ThemeDTO dto = new ThemeDTO();
         dto.setId(entity.getId());
@@ -34,5 +62,15 @@ public class ThemeService {
         dto.setCreatedAt(entity.getCreatedAt());
         dto.setUpdatedAt(entity.getUpdatedAt());
         return dto;
+    }
+
+    private ThemeEntity toEntity(ThemeDTO dto) {
+        ThemeEntity entity = new ThemeEntity();
+        entity.setId(dto.getId());
+        entity.setName(dto.getName());
+        entity.setDescription(dto.getDescription());
+        entity.setCreatedAt(dto.getCreatedAt());
+        entity.setUpdatedAt(dto.getUpdatedAt());
+        return entity;
     }
 }
