@@ -6,8 +6,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
-import java.util.Date;
-
 @Data
 @Entity
 public class ThemeEntity {
@@ -16,6 +14,6 @@ public class ThemeEntity {
     private Long id;
     private String name;
     private String description;
-    private Date createdAt;
-    private Date updatedAt;
+    private String createdAt;
+    private String updatedAt;
 }
