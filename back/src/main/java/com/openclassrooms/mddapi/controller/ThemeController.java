@@ -2,9 +2,7 @@ package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.dto.out.ThemeDTO;
 import com.openclassrooms.mddapi.service.ThemeService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,9 +15,33 @@ public class ThemeController {
         this.themeService = themeService;
     }
 
+    // GET /api/themes/{id}
+    @GetMapping("/{id}")
+    public ThemeDTO getThemeById(int id) {
+        return themeService.getThemeById(id);
+    }
+
     // GET /api/themes
     @GetMapping
     public List<ThemeDTO> getAllThemes() {
         return themeService.getAllThemes();
+    }
+
+    // POST /api/themes
+    @PostMapping
+    public ThemeDTO createTheme(@RequestBody ThemeDTO themeDto) {
+        return themeService.createTheme(themeDto);
+    }
+
+    // PUT /api/themes/{id}
+    @PutMapping("/{id}")
+    public ThemeDTO updateTheme(@PathVariable Integer id, @RequestBody ThemeDTO themeDto) {
+        return themeService.updateTheme(id, themeDto);
+    }
+
+    // DELETE /api/themes/{id}
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Integer id) {
+        themeService.deleteTheme(id);
     }
 }
