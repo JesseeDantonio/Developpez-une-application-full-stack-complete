@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.service;
 
+import com.openclassrooms.mddapi.dto.in.CreateThemeDTO;
 import com.openclassrooms.mddapi.dto.out.ThemeDTO;
 import com.openclassrooms.mddapi.entity.ThemeEntity;
 import com.openclassrooms.mddapi.repository.ThemeRepository;
@@ -32,7 +33,7 @@ public class ThemeService {
         return toDTO(themeRepository.findById(id).orElseThrow());
     }
 
-    public ThemeDTO createTheme(ThemeDTO themeDto) {
+    public CreateThemeDTO createTheme(CreateThemeDTO themeDto) {
         themeRepository.save(toEntity(themeDto));
         return themeDto;
     }
@@ -72,5 +73,15 @@ public class ThemeService {
         entity.setCreatedAt(dto.getCreatedAt());
         entity.setUpdatedAt(dto.getUpdatedAt());
         return entity;
+    }
+
+    private ThemeEntity toEntity(CreateThemeDTO dto) {
+        ThemeEntity entity = new ThemeEntity();
+        entity.setName(dto.getName());
+        entity.setDescription(dto.getDescription());
+        entity.setCreatedAt(dto.getCreatedAt());
+        entity.setUpdatedAt(dto.getUpdatedAt());
+        return entity;
+
     }
 }
