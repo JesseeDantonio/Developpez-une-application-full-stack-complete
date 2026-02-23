@@ -26,8 +26,8 @@ public class  AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody UserCreateDTO userCreateDTO) {
         try {
-            authService.register(userCreateDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+            TokenDTO tokenDTO = authService.register(userCreateDTO);
+            return ResponseEntity.ok(tokenDTO);
         } catch (RuntimeException e) {
             return ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED)
@@ -55,7 +55,6 @@ public class  AuthController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         try {
             String email = authentication.getName();
-            System.out.println(authentication.getCredentials());
             UserDTO user = authService.me(email);
             return ResponseEntity.ok(user);
         } catch (RuntimeException e) {

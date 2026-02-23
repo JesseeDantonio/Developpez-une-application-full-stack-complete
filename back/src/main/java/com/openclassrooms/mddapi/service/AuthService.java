@@ -35,11 +35,16 @@ public class AuthService {
         this.jsonWebToken = jsonWebToken;
     }
 
-    public void register(UserCreateDTO userAuth) {
+
+    public TokenDTO register(UserCreateDTO userAuth) {
         Optional<UserEntity> user = userRepo.findByEmail(userAuth.getEmail());
         if (user.isPresent()) {
             throw new RuntimeException("Utilisateur déjà existant");
         }
+
+        TokenDTO dto = new TokenDTO(
+                jsonWebToken.generateToken(userAuth.getEmail() , ACCESS_TOKEN_EXPIRATION)
+        );
 
         userAuth.setEmail(userAuth.getEmail());
         userAuth.setName(userAuth.getName());
@@ -53,6 +58,8 @@ public class AuthService {
         userEntity.setCreatedAt(LocalDate.now().toString());
 
         userRepo.save(userEntity);
+
+        return dto;
     }
 
 
