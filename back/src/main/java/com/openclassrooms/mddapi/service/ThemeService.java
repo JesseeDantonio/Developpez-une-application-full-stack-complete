@@ -38,11 +38,12 @@ public class ThemeService {
         return themeDto;
     }
 
-    public ThemeDTO updateTheme(Integer id, ThemeDTO themeDTO) {
+    public ThemeDTO updateTheme(Integer id, CreateThemeDTO createThemeDTO) {
         ThemeEntity existingTh = themeRepository.findById(id).orElse(null);
+
         if (existingTh != null) {
-            existingTh.setName(themeDTO.getName());
-            existingTh.setDescription(themeDTO.getDescription());
+            existingTh.setName(createThemeDTO.getName());
+            existingTh.setDescription(createThemeDTO.getDescription());
             existingTh.setUpdatedAt(LocalDate.now().toString());
             themeRepository.save(existingTh);
             return toDTO(existingTh);
