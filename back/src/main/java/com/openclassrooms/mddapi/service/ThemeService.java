@@ -34,6 +34,8 @@ public class ThemeService {
     }
 
     public CreateThemeDTO createTheme(CreateThemeDTO themeDto) {
+        themeDto.setCreatedAt(LocalDate.now().toString());
+        themeDto.setUpdatedAt(LocalDate.now().toString());
         themeRepository.save(toEntity(themeDto));
         return themeDto;
     }
