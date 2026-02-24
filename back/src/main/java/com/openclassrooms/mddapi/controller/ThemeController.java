@@ -18,7 +18,7 @@ public class ThemeController {
 
     // GET /api/themes/{id}
     @GetMapping("/{id}")
-    public ThemeDTO getThemeById(int id) {
+    public ThemeDTO getThemeById(@PathVariable Integer id) {
         return themeService.getThemeById(id);
     }
 
@@ -36,7 +36,7 @@ public class ThemeController {
 
     // PUT /api/themes/{id}
     @PutMapping("/{id}")
-    public ThemeDTO updateTheme(@PathVariable Integer id, @RequestBody ThemeDTO themeDto) {
+    public ThemeDTO updateTheme(@PathVariable Integer id, @RequestBody CreateThemeDTO themeDto) {
         return themeService.updateTheme(id, themeDto);
     }
 
