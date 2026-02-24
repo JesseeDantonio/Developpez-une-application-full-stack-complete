@@ -16,6 +16,6 @@ public class ArticleEntity {
     private UserEntity user;
     private String title;
     private String content;
-    private Date createdAt;
-    private Date updatedAt;
+    private String createdAt;
+    private String updatedAt;
 }
