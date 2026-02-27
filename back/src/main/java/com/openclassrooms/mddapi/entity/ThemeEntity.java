@@ -1,13 +1,16 @@
 package com.openclassrooms.mddapi.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
+@Getter
+@Setter
 public class ThemeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,4 +19,7 @@ public class ThemeEntity {
     private String description;
     private String createdAt;
     private String updatedAt;
+
+    @ManyToMany(mappedBy = "themes") // "themes" est le nom de la variable dans Article
+    private Set<ArticleEntity> articles = new HashSet<>();
 }
