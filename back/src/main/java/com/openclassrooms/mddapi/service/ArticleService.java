@@ -48,6 +48,8 @@ public class ArticleService {
         if (existingArticle != null) {
             if (existingArticle.getTitle() != null) existingArticle.setTitle(articleDto.getTitle());
             if (existingArticle.getContent() != null) existingArticle.setContent(articleDto.getContent());
+            if (articleDto.getTitle() != null && !articleDto.getTitle().isEmpty()) existingArticle.setTitle(articleDto.getTitle());
+            if (articleDto.getContent() != null && !articleDto.getContent().isEmpty()) existingArticle.setContent(articleDto.getContent());
             existingArticle.setUpdatedAt(LocalDate.now().toString());
             articleRepository.save(existingArticle);
             return toDTO(existingArticle);
