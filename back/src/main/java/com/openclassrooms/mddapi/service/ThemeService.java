@@ -3,21 +3,31 @@ package com.openclassrooms.mddapi.service;
 import com.openclassrooms.mddapi.dto.in.CreateThemeDTO;
 import com.openclassrooms.mddapi.dto.out.ThemeDTO;
 import com.openclassrooms.mddapi.entity.ThemeEntity;
+import com.openclassrooms.mddapi.entity.UserEntity;
 import com.openclassrooms.mddapi.repository.ThemeRepository;
+import com.openclassrooms.mddapi.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ThemeService {
     private final ThemeRepository themeRepository;
+    private final UserRepository userRepository;
 
-    public ThemeService(ThemeRepository themeRepository) {
+    public ThemeService(ThemeRepository themeRepository, UserRepository userRepository) {
         this.themeRepository = themeRepository;
+        this.userRepository = userRepository;
     }
+
+
 
     public List<ThemeDTO> getAllThemes() {
         List<ThemeDTO> themes = new ArrayList<>();
@@ -56,6 +66,40 @@ public class ThemeService {
 
     public void deleteTheme(Integer id) {
         themeRepository.deleteById(id);
+    }
+
+    // S'abonner à un thème
+    @Transactional
+    public void subscribe(Integer userId, Integer themeId) {
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        ThemeEntity theme = themeRepository.findById(themeId)
+                .orElseThrow(() -> new RuntimeException("Theme not found"));
+
+        // Hibernate gère l'insertion dans la table theme_subscription
+        user.getSubscribedThemes().add(theme);
+        userRepository.save(user);
+    }
+
+    // Se désabonner
+    @Transactional
+    public void unsubscribe(Integer userId, Integer themeId) {
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        ThemeEntity theme = themeRepository.findById(themeId)
+                .orElseThrow(() -> new RuntimeException("Theme not found"));
+
+        user.getSubscribedThemes().remove(theme);
+        userRepository.save(user);
+    }
+
+    // Récupérer les abonnements d'un utilisateur (pour le profil)
+    @Transactional(readOnly = true)
+    public List<ThemeDTO> getSubscribedThemes(Integer userId) {
+        UserEntity user = userRepository.findById(userId).orElseThrow();
+        return user.getSubscribedThemes().stream()
+                .map(this::toDTO) // Ta méthode de mapping existante
+                .collect(Collectors.toList());
     }
 
     private ThemeDTO toDTO(ThemeEntity entity) {
