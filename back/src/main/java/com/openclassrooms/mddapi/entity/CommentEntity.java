@@ -18,5 +18,5 @@ public class CommentEntity {
     @JoinColumn(name = "article_id")
     private ArticleEntity article;
     private String content;
-    private Date createdAt;
+    private String createdAt;
 }
