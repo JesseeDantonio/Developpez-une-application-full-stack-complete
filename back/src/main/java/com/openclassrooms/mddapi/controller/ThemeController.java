@@ -2,9 +2,12 @@ package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.dto.in.CreateThemeDTO;
 import com.openclassrooms.mddapi.dto.out.ThemeDTO;
+import com.openclassrooms.mddapi.feature.JsonWebToken;
 import com.openclassrooms.mddapi.service.ThemeService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -14,6 +17,10 @@ public class ThemeController {
 
     public ThemeController(ThemeService themeService) {
         this.themeService = themeService;
+    }
+
+    private Integer getUserIdFromPrincipal(Principal principal) {
+        return Integer.parseInt(principal.getName());
     }
 
     // GET /api/themes/{id}
@@ -44,5 +51,24 @@ public class ThemeController {
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Integer id) {
         themeService.deleteTheme(id);
+    }
+
+    // POST /api/themes/1/subscribe
+    @PostMapping("/{id}/subscribe")
+    public ResponseEntity<Void> subscribe(@PathVariable Integer id, Principal principal) {
+        // Récupérer l'ID de l'utilisateur connecté via le Principal ou le JWT
+        Integer userId = getUserIdFromPrincipal(principal);
+
+        themeService.subscribe(userId, id);
+        return ResponseEntity.ok().build();
+    }
+
+    // DELETE /api/themes/1/subscribe
+    @DeleteMapping("/{id}/subscribe")
+    public ResponseEntity<Void> unsubscribe(@PathVariable Integer id, Principal principal) {
+        Integer userId = getUserIdFromPrincipal(principal);
+
+        themeService.unsubscribe(userId, id);
+        return ResponseEntity.ok().build();
     }
 }
