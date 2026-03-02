@@ -2,32 +2,47 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
-import { AuthResponse, LoginRequest, RegisterRequest } from '../models/auth.model';
+import {
+  AuthResponse,
+  LoginRequest,
+  RegisterRequest,
+} from '../models/auth.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  private apiUrl = '/api/auth';
 
-  private apiUrl = '/api/auth'; 
-
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+  ) {}
 
   // Méthode de connexion
   login(credentials: LoginRequest): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, credentials).pipe(
-      tap(response => {
-
-        if (response && response.token) {
-          this.setToken(response.token);
-        }
-      })
-    );
+    return this.http
+      .post<AuthResponse>(`${this.apiUrl}/login`, credentials)
+      .pipe(
+        tap((response) => {
+          if (response && response.token) {
+            this.setToken(response.token);
+          }
+        }),
+      );
   }
 
   // Méthode d'inscription
   register(userData: RegisterRequest): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/register`, userData);
+    return this.http
+      .post<AuthResponse>(`${this.apiUrl}/register`, userData)
+      .pipe(
+        tap((response) => {
+          if (response && response.token) {
+            this.setToken(response.token);
+          }
+        }),
+      );
   }
 
   // Stocker le token dans le LocalStorage
@@ -44,7 +59,7 @@ export class AuthService {
   isAuthenticated(): boolean {
     const token = this.getToken();
     // on vérifie aussi l'expiration du token ici
-    return !!token; 
+    return !!token;
   }
 
   // Déconnexion
