@@ -40,6 +40,7 @@ export class AuthService {
         tap((response) => {
           if (response && response.token) {
             this.setToken(response.token);
+            this.router.navigate(['/article']);
           }
         }),
       );
