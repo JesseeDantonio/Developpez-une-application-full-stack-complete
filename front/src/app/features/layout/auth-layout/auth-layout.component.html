@@ -4,7 +4,7 @@
         <img (click)="goToArticles()" src="/assets/logo_p6.png" alt="logo" />
 
         <div id="burger-action">
-            <button class="logout">Se déconnecter</button>
+            <button class="logout" (click)="logout()">Se déconnecter</button>
             <button routerLink="/article" routerLinkActive="violet" (click)="goToArticles()">Articles</button>
             <button routerLink="/theme" routerLinkActive="violet" (click)="goToThemes()">Thèmes</button>
 
@@ -46,7 +46,7 @@
     <nav [class.open]="menuOpen" class="mobile-menu">
         <button class="close-btn" (click)="closeMenu()">✖</button>
         <ul>
-            <li><button class="logout">Se déconnecter</button></li>
+            <li><button class="logout" (click)="logout()">Se déconnecter</button></li>
             <li><button routerLink="/article" routerLinkActive="violet" (click)="goToArticles()">Articles</button></li>
             <li><button routerLink="/theme" routerLinkActive="violet" (click)="goToThemes()">Thèmes</button></li>
         </ul>
