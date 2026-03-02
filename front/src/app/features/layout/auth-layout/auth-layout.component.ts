@@ -3,6 +3,7 @@ import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { map } from 'rxjs';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-auth-layout',
@@ -19,7 +20,7 @@ export class AuthLayoutComponent {
     .observe([Breakpoints.Medium, Breakpoints.Large, Breakpoints.XLarge])
     .pipe(map((result) => result.matches));
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   public closeMenu() {
     if (this.menuOpen) this.menuOpen = false;
@@ -42,5 +43,9 @@ export class AuthLayoutComponent {
   public goToProfil() {
     this.router.navigate(['/profil']);
     this.closeMenu();
+  }
+
+  public logout() {
+    this.authService.logout();
   }
 }
