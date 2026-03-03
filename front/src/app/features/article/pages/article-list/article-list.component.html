@@ -1,0 +1,26 @@
+<div id="tools">
+    <button (click)="goCreateArticle()" class="violet-btn">
+        Créer un article
+    </button>
+
+    <div id="filter">
+        Trier par
+    </div>
+</div>
+
+<div id="articles">
+    @for (article of articlesList; track article.id) {
+    <article>
+        <h3 class="title">{{ article.title }}</h3>
+        <div class="detail">
+            <span>{{ article.createdAt }}</span><span>{{ article.userId }}</span>
+        </div>
+        <p class="content">
+            {{ article.content }}
+        </p>
+    </article>
+    }
+    @empty {
+    <p>Aucun article trouvé</p>
+    }
+</div>
