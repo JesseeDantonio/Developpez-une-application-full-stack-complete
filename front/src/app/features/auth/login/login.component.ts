@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginRequest } from 'src/app/core/models/auth.model';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/core/services/auth.service';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 @Component({
   selector: 'app-login',

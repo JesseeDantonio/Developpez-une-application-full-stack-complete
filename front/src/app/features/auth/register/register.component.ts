@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RegisterRequest } from 'src/app/core/models/auth.model';
-import { AuthService } from 'src/app/core/services/auth.service';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
 
     this.authService.register(credentials).subscribe({
       next: (response) => {
-        // console.log('Registration successful', response.status);
+        console.log('Registration successful');
       },
       error: (err) => console.error('Erreur register', err)
     });
