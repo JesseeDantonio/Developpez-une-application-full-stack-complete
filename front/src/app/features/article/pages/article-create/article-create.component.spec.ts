@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateArticleComponent } from './create-article.component';
+import { CreateArticleComponent } from './article-create.component';
 
 describe('CreateArticleComponent', () => {
   let component: CreateArticleComponent;
