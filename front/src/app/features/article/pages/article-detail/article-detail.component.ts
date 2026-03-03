@@ -4,8 +4,8 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-detail-article',
   imports: [],
-  templateUrl: './detail-article.component.html',
-  styleUrl: './detail-article.component.scss',
+  templateUrl: './article-detail.component.html',
+  styleUrl: './article-detail.component.scss',
 })
 export class DetailArticleComponent {
   constructor(private location: Location) {}
