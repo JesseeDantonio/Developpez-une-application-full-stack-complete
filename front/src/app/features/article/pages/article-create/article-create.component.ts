@@ -4,8 +4,8 @@ import { AsyncPipe, Location } from '@angular/common';
 @Component({
   selector: 'app-create-article',
   imports: [],
-  templateUrl: './create-article.component.html',
-  styleUrl: './create-article.component.scss',
+  templateUrl: './article-create.component.html',
+  styleUrl: './article-create.component.scss',
 })
 export class CreateArticleComponent {
 
