@@ -6,7 +6,7 @@ import {
   AuthResponse,
   LoginRequest,
   RegisterRequest,
-} from '../models/auth.model';
+} from '../../models/auth.model';
 
 @Injectable({
   providedIn: 'root',
