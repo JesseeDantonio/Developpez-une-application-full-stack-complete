@@ -17,6 +17,11 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+// Reset CSS pour inclure les bordures dans le 100% de la largeur
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 .center-page {
   height: 100%;
   display: flex;
