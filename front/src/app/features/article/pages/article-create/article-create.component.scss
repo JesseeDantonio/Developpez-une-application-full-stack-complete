@@ -7,23 +7,11 @@
 
 form {
     height: 100%;
-    width: auto;
 }
 
-#content {
-    width: 100%;
-    height: 100%;
-    resize: none;
+#theme {
     border-color: v.$primary-color;
-    border-width: 2px;
     border-radius: 8px;
-    height: 20vh;
-    font-size: larger;
-}
-
-#title {
-    width: 100%;
-    font-size: larger;
 }
 
 input {
@@ -36,6 +24,24 @@ ul {
     flex-direction: column;
     gap: 1vh;
     margin-bottom: 2rem;
+}
+
+#title, #theme, #content {
+    width: 100%;
+    font-size: larger;
+    height: auto;
+    background: none;
+}
+
+#content {
+    width: 100%;
+    height: 15vh;
+    resize: none;
+    border-color: v.$primary-color;
+    border-width: 2px;
+    border-radius: 8px;
+    height: 20vh;
+    font-size: larger;
 }
 
 @media (max-width: v.$breakpoint-mobile) {
