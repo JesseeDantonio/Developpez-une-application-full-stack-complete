@@ -12,7 +12,8 @@ export abstract class ApiService<T extends Resource> {
   ) {}
 
   // CREATE
-  create(resource: T): Observable<T> {
+  // Note: Omit<T, 'id'> signifie "Prends le type T mais sans la propriété 'id'", car généralement on ne fournit pas l'id lors de la création
+  create(resource: Partial<T>): Observable<T> {
     return this.http.post<T>(this.actionUrl, resource);
   }
 
