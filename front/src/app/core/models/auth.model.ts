@@ -12,3 +12,9 @@ export interface RegisterRequest {
 export interface AuthResponse {
   token: string;
 }
+
+export interface ArticleRequest {
+  theme: string;
+  title: string;
+  content: string;
+}
