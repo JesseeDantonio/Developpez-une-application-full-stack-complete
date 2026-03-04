@@ -11,7 +11,12 @@
     <form [formGroup]="articleCreateForm" (ngSubmit)="onSubmit()">
         <ul>
             <li>
-                <input placeholder="Sélectionner un thème" type="text" id="title" name="article_title" formControlName="theme" />
+                <select name="theme" id="theme" formControlName="theme">
+                    <option value="">Sélectionner un thème</option>
+                    <option value="technologie">Technologie</option>
+                    <option value="culture">Culture</option>
+                    <option value="sport">Sport</option>
+                </select>
             </li>
             <li>
                 <input placeholder="Titre de l'article" type="text" id="title" name="article_title" formControlName="title" />
