@@ -13,9 +13,9 @@
             <li>
                 <select name="theme" id="theme" formControlName="theme">
                     <option value="">Sélectionner un thème</option>
-                    <option value="technologie">Technologie</option>
-                    <option value="culture">Culture</option>
-                    <option value="sport">Sport</option>
+                    <option *ngFor="let theme of themesList" [value]="theme.id">
+                        {{ theme.name }}
+                    </option>
                 </select>
             </li>
             <li>
