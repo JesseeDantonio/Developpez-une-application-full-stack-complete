@@ -6,7 +6,7 @@ import { HomeComponent } from './features/home/home.component';
 import { LayoutComponent } from './features/layout/layout.component';
 import { AuthLayoutComponent } from './features/layout/auth-layout/auth-layout.component';
 import { ArticleComponent } from './features/article/pages/article-list/article-list.component';
-import { ThemeComponent } from './features/theme/theme.component';
+import { ThemeComponent } from './features/theme/pages/theme-list/theme-list.component';
 import { CreateArticleComponent } from './features/article/pages/article-create/article-create.component';
 import { DetailArticleComponent } from './features/article/pages/article-detail/article-detail.component';
 import { ProfilComponent } from './features/profil/profil.component';
