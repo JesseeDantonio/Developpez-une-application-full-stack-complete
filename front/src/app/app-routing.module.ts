@@ -37,7 +37,7 @@ export const routes: Routes = [
       { path: 'article', component: ArticleComponent },
       { path: 'theme', component: ThemeComponent },
       { path: 'create-article', component: CreateArticleComponent },
-      { path: 'detail-article', component: DetailArticleComponent },
+      { path: 'detail-article/:id', component: DetailArticleComponent },
       { path: 'profil', component: ProfilComponent }
     ]
   }
