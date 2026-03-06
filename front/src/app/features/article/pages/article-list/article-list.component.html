@@ -9,8 +9,8 @@
 </div>
 
 <div id="articles">
-    @for (article of articlesList; track article.id) {
-    <article>
+    @for (article of articles; track article.id) {
+    <article (click)="goArticleDetail(article.id)">
         <h3 class="title">{{ article.title }}</h3>
         <div class="detail">
             <span>{{ article.createdAt }}</span><span>{{ article.userId }}</span>
@@ -19,8 +19,7 @@
             {{ article.content }}
         </p>
     </article>
-    }
-    @empty {
-    <p>Aucun article trouvé</p>
+    } @empty {
+    <p>Aucun article trouvé.</p>
     }
 </div>
