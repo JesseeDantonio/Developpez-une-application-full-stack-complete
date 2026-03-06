@@ -57,7 +57,25 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-  // Vérifier si l'utilisateur est connecté (vérification basique)
+  getUserIdFromToken(): string | null {
+    const token : string | null = this.getToken();
+
+    if (!token) {
+      console.error('No token found in localStorage.');
+      return null;
+    }
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+
+      console.log('Decoded token payload:', payload);
+      return payload.sub;
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return null;
+    }
+  }
+  // Vérifier si l'utilisateur est authentifié
   isAuthenticated(): boolean {
     const token = this.getToken();
     // on vérifie aussi l'expiration du token ici
