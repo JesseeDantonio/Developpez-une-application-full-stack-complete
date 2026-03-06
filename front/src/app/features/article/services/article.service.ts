@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ArticleService extends ApiService<ArticleDto> {
   constructor(http: HttpClient) {
-    super(http, 'articles'); // Juste le endpoint 'articles'
+    super(http, 'api/articles'); // Juste le endpoint 'articles'
   }
   
   // Méthodes spécifiques aux articles UNIQUEMENT ici
