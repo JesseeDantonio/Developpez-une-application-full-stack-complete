@@ -13,9 +13,11 @@
             <li>
                 <select name="theme" id="theme" formControlName="theme">
                     <option value="">Sélectionner un thème</option>
-                    <option *ngFor="let theme of themesList" [value]="theme.id">
-                        {{ theme.name }}
-                    </option>
+                    @for (theme of (themes | async) ?? []; track theme.id) {
+                        <option [value]="theme.id">
+                            {{ theme.name }}
+                        </option>
+                    }
                 </select>
             </li>
             <li>
