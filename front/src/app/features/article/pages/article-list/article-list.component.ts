@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-article',
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './article-list.component.html',
   styleUrl: './article-list.component.scss',
 })
