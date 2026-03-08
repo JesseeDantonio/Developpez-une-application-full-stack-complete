@@ -12,7 +12,8 @@ import { CommonModule } from '@angular/common';
 })
 export class ArticleComponent implements OnInit {
 
-  public articles: ArticleDto[] = [];
+  public articles: Article[] = [];
+
   constructor(
     private router: Router,
     private articleService: ArticleService
