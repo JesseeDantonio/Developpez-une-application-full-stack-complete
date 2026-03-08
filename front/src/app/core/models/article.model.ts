@@ -4,5 +4,7 @@ export interface Article {
   content: String;
   userId: String;
   createdAt: String;
-  userName?: String;
+  updatedAt: String;
+  userName: String;
+  themeIds: number[];
 }
