@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ThemeDto } from 'src/app/core/dto/in/ThemeDto';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-theme',
@@ -7,5 +9,15 @@ import { Component } from '@angular/core';
   styleUrl: './theme-list.component.scss',
 })
 export class ThemeComponent {
+
+  public themes: ThemeDto[] = [];
+
+  constructor(private themeService: ThemeService) { }
+
+  ngOnInit(): void {
+    this.themeService.getAll().subscribe((themes) => {
+      this.themes = themes;
+    });
+  }
 
 }
