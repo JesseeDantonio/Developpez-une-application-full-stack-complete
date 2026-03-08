@@ -37,14 +37,10 @@ public class AuthService {
 
 
     public TokenDTO register(UserCreateDTO userAuth) {
-        Optional<UserEntity> user = userRepo.findByEmail(userAuth.getEmail());
-        if (user.isPresent()) {
+        Optional<UserEntity> userExist = userRepo.findByEmail(userAuth.getEmail());
+        if (userExist.isPresent()) {
             throw new RuntimeException("Utilisateur déjà existant");
         }
-
-        TokenDTO dto = new TokenDTO(
-                jsonWebToken.generateToken(userAuth.getEmail() , ACCESS_TOKEN_EXPIRATION)
-        );
 
         userAuth.setEmail(userAuth.getEmail());
         userAuth.setName(userAuth.getName());
@@ -57,7 +53,11 @@ public class AuthService {
         userEntity.setUpdatedAt(LocalDate.now().toString());
         userEntity.setCreatedAt(LocalDate.now().toString());
 
-        userRepo.save(userEntity);
+        UserEntity userCreated = userRepo.save(userEntity);
+
+        TokenDTO dto = new TokenDTO(
+                jsonWebToken.generateToken(userCreated.getId().toString(), userCreated.getName() , ACCESS_TOKEN_EXPIRATION)
+        );
 
         return dto;
     }
@@ -72,7 +72,7 @@ public class AuthService {
             throw new RuntimeException("Mot de passe incorrect");
         }
 
-        String accessToken = jsonWebToken.generateToken(user.get().getEmail(), ACCESS_TOKEN_EXPIRATION);
+        String accessToken = jsonWebToken.generateToken(user.get().getId().toString(), user.get().getName(), ACCESS_TOKEN_EXPIRATION);
 
         return new TokenDTO(accessToken);
     }

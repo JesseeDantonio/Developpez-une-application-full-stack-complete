@@ -20,10 +20,11 @@ public class JsonWebToken {
         SECRET_KEY = Keys.hmacShaKeyFor(SECRET_KEY_STRING.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String generateToken(String username, long tokenExpiration) {
+    public String generateToken(String userId, String username, long tokenExpiration) {
         Instant now = Instant.now();
         return Jwts.builder()
-                .claim("sub", username)
+                .claim("name", username)
+                .claim("sub", userId)
                 .issuedAt(Date.from(now))
                 .expiration(Date.from(now.plus(tokenExpiration, ChronoUnit.MILLIS)))
                 .signWith(SECRET_KEY)
