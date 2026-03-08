@@ -4,20 +4,37 @@ import { ArticleService } from '../../services/article.service';
 import { UserService } from 'src/app/features/user/services/user.service';
 import { Article } from 'src/app/core/models/article.model';
 import { ThemeService } from 'src/app/features/theme/services/theme.service';
+import { CommentService } from 'src/app/features/comments/services/comment.service';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { Comment } from 'src/app/core/models/comment.model';
 
 @Component({
   selector: 'app-detail-article',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './article-detail.component.html',
   styleUrl: './article-detail.component.scss',
 })
 export class DetailArticleComponent implements OnInit {
 
-  themeNames: String[] = [];
+  public themeNames: String[] = [];
+  public comments: Comment[] = [];
+  public commentCreateForm!: FormGroup;
 
   article: Article | null = null;
 
-  constructor(private location: Location, private articleService: ArticleService, private userService: UserService, private themeService: ThemeService) { }
+  constructor(private location: Location,
+    private articleService: ArticleService,
+    private userService: UserService,
+    private themeService: ThemeService,
+    private commentService: CommentService,
+    private authService: AuthService,
+    private fb: FormBuilder,
+  ) {
+    this.commentCreateForm = this.fb.group({
+      content: ['', Validators.required],
+    });
+  }
 
   public goBack() {
     this.location.back();
@@ -38,26 +55,84 @@ export class DetailArticleComponent implements OnInit {
           userName: user.name
         }
       });
+
       this.themeService.getAll().subscribe((themes) => {
         if (this.article) {
-          console.log(themes);
           this.article.themeIds?.forEach((themeId) => {
             const theme = themes.find(t => t.id === themeId);
             if (theme) {
-              console.log(theme.name);
               this.themeNames.push(theme.name);
             }
           });
         }
       });
+
+      this.commentService.getAll().subscribe((comments) => {
+        for (let comment of comments) {
+          if (comment.articleId === articleId) {
+
+            this.userService.getById(comment.userId as unknown as number).subscribe((user) => {
+              this.comments.push({
+                id: comment.id,
+                content: comment.content,
+                userId: comment.userId,
+                articleId: comment.articleId,
+                createdAt: comment.createdAt,
+                userName: user.name
+              });
+            });
+          };
+        }
+      });
     });
   }
 
+  onSubmit() {
+    if (this.commentCreateForm.invalid) {
+      return;
+    }
 
-  public getArticleIdFromUrl(): number {
+    const userId: string | null = this.authService.getUserIdFromToken();
+    console.log('User ID extracted from token:', userId);
+    if (userId === null) {
+      console.error('User ID not found in token. Please log in again.');
+      return;
+    }
+
+    this.userService.getById(userId as unknown as number).subscribe((user) => {
+      if (!user) {
+        return;
+      }
+    });
+
+    const commentData = {
+      articleId: this.article?.id,
+      userId: userId,
+      content: this.commentCreateForm.value.content,
+    };
+
+    this.commentService.create(commentData).subscribe((newComment) => {
+      this.userService.getById(newComment.userId as unknown as number).subscribe((user) => {
+
+        this.comments.push({
+          id: newComment.id,
+          content: newComment.content,
+          userId: newComment.userId,
+          articleId: newComment.articleId,
+          createdAt: newComment.createdAt,
+          userName: user.name
+        });
+      });
+      this.commentCreateForm.reset();
+    });
+  }
+
+  private getArticleIdFromUrl(): number {
     const url = this.location.path();
     const segments = url.split('/');
     const id = segments[segments.length - 1];
     return parseInt(id, 10);
   }
+
+
 }
