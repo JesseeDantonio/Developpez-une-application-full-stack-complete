@@ -1,7 +1,8 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ArticleDto } from 'src/app/core/dto/in/articleDto';
 import { ArticleService } from '../../services/article.service';
+import { UserService } from 'src/app/features/user/services/user.service';
+import { Article } from 'src/app/core/models/article.model';
 
 @Component({
   selector: 'app-detail-article',
@@ -11,9 +12,9 @@ import { ArticleService } from '../../services/article.service';
 })
 export class DetailArticleComponent implements OnInit {
 
-  article: ArticleDto | null = null;
+  article: Article | null = null;
 
-  constructor(private location: Location, private articleService: ArticleService) { }
+  constructor(private location: Location, private articleService: ArticleService, private userService: UserService) { }
 
   public goBack() {
     this.location.back();
@@ -22,7 +23,18 @@ export class DetailArticleComponent implements OnInit {
   ngOnInit(): void {
     const articleId = this.getArticleIdFromUrl();
     this.articleService.getById(articleId).subscribe((article) => {
-      this.article = article;
+      this.userService.getById(article.userId as unknown as number).subscribe((user) => {
+        this.article = {
+          id: article.id,
+          title: article.title,
+          content: article.content,
+          userId: article.userId,
+          createdAt: article.createdAt,
+          updatedAt: article.updatedAt,
+          themeIds: article.themeIds,
+          userName: user.name
+        }
+      });
     });
   }
 
