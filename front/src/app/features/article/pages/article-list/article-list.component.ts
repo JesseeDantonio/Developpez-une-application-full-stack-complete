@@ -32,6 +32,8 @@ export class ArticleComponent implements OnInit {
               content: article.content,
               userId: article.userId,
               createdAt: article.createdAt,
+              updatedAt: article.updatedAt,
+              themeIds: article.themeIds,
               userName: user.name
             })
           }
