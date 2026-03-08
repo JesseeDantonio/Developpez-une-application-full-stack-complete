@@ -1,8 +1,8 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ArticleService } from '../../services/article.service';
-import { ArticleDto } from 'src/app/core/dto/in/articleDto';
-import { CommonModule } from '@angular/common';
+import { UserService } from 'src/app/features/user/services/user.service';
+import { Article } from 'src/app/core/models/article.model';
 
 @Component({
   selector: 'app-article',
@@ -16,15 +16,27 @@ export class ArticleComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private articleService: ArticleService
-  ) {}
+    private articleService: ArticleService,
+    private userService: UserService
+  ) { }
 
   ngOnInit() {
     this.articleService.getAll().subscribe((articles) => {
-      for (let article of articles) {
-        // Afficher le nom des utilisateurs au lieu de l'id
-      }
-      this.articles = articles;
+      this.userService.getAll().subscribe((users) => {
+        for (let article of articles) {
+          const user = users.find((u) => u.id === article.userId as unknown as number);
+          if (user) {
+            this.articles.push({
+              id: article.id,
+              title: article.title,
+              content: article.content,
+              userId: article.userId,
+              createdAt: article.createdAt,
+              userName: user.name
+            })
+          }
+        }
+      });
     });
   }
 
@@ -35,6 +47,4 @@ export class ArticleComponent implements OnInit {
   public goArticleDetail(id: number) {
     this.router.navigate(['/detail-article', id]);
   }
-
-
 }
