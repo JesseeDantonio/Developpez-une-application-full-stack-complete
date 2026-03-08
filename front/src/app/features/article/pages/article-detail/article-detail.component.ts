@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ArticleService } from '../../services/article.service';
 import { UserService } from 'src/app/features/user/services/user.service';
 import { Article } from 'src/app/core/models/article.model';
+import { ThemeService } from 'src/app/features/theme/services/theme.service';
 
 @Component({
   selector: 'app-detail-article',
@@ -12,9 +13,11 @@ import { Article } from 'src/app/core/models/article.model';
 })
 export class DetailArticleComponent implements OnInit {
 
+  themeNames: String[] = [];
+
   article: Article | null = null;
 
-  constructor(private location: Location, private articleService: ArticleService, private userService: UserService) { }
+  constructor(private location: Location, private articleService: ArticleService, private userService: UserService, private themeService: ThemeService) { }
 
   public goBack() {
     this.location.back();
@@ -33,6 +36,18 @@ export class DetailArticleComponent implements OnInit {
           updatedAt: article.updatedAt,
           themeIds: article.themeIds,
           userName: user.name
+        }
+      });
+      this.themeService.getAll().subscribe((themes) => {
+        if (this.article) {
+          console.log(themes);
+          this.article.themeIds?.forEach((themeId) => {
+            const theme = themes.find(t => t.id === themeId);
+            if (theme) {
+              console.log(theme.name);
+              this.themeNames.push(theme.name);
+            }
+          });
         }
       });
     });
