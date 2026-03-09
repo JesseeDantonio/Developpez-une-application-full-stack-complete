@@ -13,6 +13,7 @@ import { ThemeDto } from 'src/app/core/dto/in/ThemeDto';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { Observable } from 'rxjs/internal/Observable';
+import { Payload } from 'src/app/core/models/payload.interface';
 
 @Component({
   selector: 'app-create-article',
@@ -52,15 +53,13 @@ export class CreateArticleComponent implements OnInit {
       return;
     }
 
-    const userId : string | null = this.authService.getUserIdFromToken();
-    console.log('User ID extracted from token:', userId);
-    if (userId === null) {
-      console.error('User ID not found in token. Please log in again.');
+    const payload : Payload | null = this.authService.getPayloadFromToken();;
+    if (payload === null) {
       return;
     }
 
     const articleData: CreateArticleDto = {
-      userId: userId,
+      userId: payload.sub.toString(),
       title: this.articleCreateForm.value.title,
       content: this.articleCreateForm.value.content,
       themeIds: this.articleCreateForm.value.theme

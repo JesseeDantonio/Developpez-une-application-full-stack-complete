@@ -8,6 +8,7 @@ import { CommentService } from 'src/app/features/comments/services/comment.servi
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { Comment } from 'src/app/core/models/comment.model';
+import { Payload } from 'src/app/core/models/payload.interface';
 
 @Component({
   selector: 'app-detail-article',
@@ -92,14 +93,12 @@ export class DetailArticleComponent implements OnInit {
       return;
     }
 
-    const userId: string | null = this.authService.getUserIdFromToken();
-    console.log('User ID extracted from token:', userId);
-    if (userId === null) {
-      console.error('User ID not found in token. Please log in again.');
+    const payload : Payload | null = this.authService.getPayloadFromToken();;
+    if (payload === null) {
       return;
     }
 
-    this.userService.getById(userId as unknown as number).subscribe((user) => {
+    this.userService.getById(payload.sub).subscribe((user) => {
       if (!user) {
         return;
       }
@@ -107,7 +106,7 @@ export class DetailArticleComponent implements OnInit {
 
     const commentData = {
       articleId: this.article?.id,
-      userId: userId,
+      userId: payload.sub.toString(),
       content: this.commentCreateForm.value.content,
     };
 
