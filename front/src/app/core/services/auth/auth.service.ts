@@ -7,6 +7,7 @@ import {
   LoginRequest,
   RegisterRequest,
 } from '../../models/auth.model';
+import { Payload } from './../../models/payload.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,7 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
-  ) {}
+  ) { }
 
   // Méthode de connexion
   login(credentials: LoginRequest): Observable<AuthResponse> {
@@ -57,29 +58,29 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-  getUserIdFromToken(): string | null {
-    const token : string | null = this.getToken();
+  // Extraire les informations du token
+  getPayloadFromToken(): Payload | null {
+    const token: string | null = this.getToken();
 
     if (!token) {
-      console.error('No token found in localStorage.');
       return null;
     }
 
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
-
-      console.log('Decoded token payload:', payload);
-      return payload.sub;
+      return payload;
     } catch (error) {
-      console.error('Error decoding token:', error);
       return null;
     }
   }
   // Vérifier si l'utilisateur est authentifié
   isAuthenticated(): boolean {
-    const token = this.getToken();
-    // on vérifie aussi l'expiration du token ici
-    return !!token;
+    const payload : Payload | null = this.getPayloadFromToken();
+    if (payload) {
+      const currentTime = Math.floor(Date.now() / 1000);
+      return payload.exp > currentTime;
+    }
+    return false;
   }
 
   // Déconnexion
