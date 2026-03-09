@@ -11,6 +11,19 @@ export class ThemeService extends ApiService<ThemeDto> {
   constructor(http: HttpClient) {
     super(http, 'api/themes'); // Juste le endpoint 'themes'
   }
-  
-  // Méthodes spécifiques aux themes UNIQUEMENT ici
+
+  // Méthode pour s'abonner à un thème
+  public subscribe(themeId: number) {
+    return this.http.post(`api/themes/${themeId}/subscribe`, {});
+  }
+
+  // Méthode pour se désabonner d'un thème
+  public unsubscribe(themeId: number) {
+    return this.http.delete(`api/themes/${themeId}/subscribe`);
+  }
+
+  // Méthode pour récuperer les themes auxquels l'utilisateur est abonné
+  public getSubscribedThemes(userId: number) {
+    return this.http.get<ThemeDto[]>(`api/themes/${userId}/subscribers`);
+  }
 }
