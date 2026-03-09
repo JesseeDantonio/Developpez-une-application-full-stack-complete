@@ -53,7 +53,7 @@ public class ThemeController {
         themeService.deleteTheme(id);
     }
 
-    // POST /api/themes/1/subscribe
+    // POST /api/themes/{id}/subscribe
     @PostMapping("/{id}/subscribe")
     public ResponseEntity<Void> subscribe(@PathVariable Integer id, Principal principal) {
         // Récupérer l'ID de l'utilisateur connecté via le Principal ou le JWT
@@ -63,12 +63,18 @@ public class ThemeController {
         return ResponseEntity.ok().build();
     }
 
-    // DELETE /api/themes/1/subscribe
+    // DELETE /api/themes/{id}/subscribe
     @DeleteMapping("/{id}/subscribe")
     public ResponseEntity<Void> unsubscribe(@PathVariable Integer id, Principal principal) {
         Integer userId = getUserIdFromPrincipal(principal);
 
         themeService.unsubscribe(userId, id);
         return ResponseEntity.ok().build();
+    }
+
+    // GET /api/themes/{id}/subscribers
+    @GetMapping("/{id}/subscribers")
+    public List<ThemeDTO> getSubscribers(@PathVariable Integer id) {
+        return themeService.getSubscribedThemes(id);
     }
 }

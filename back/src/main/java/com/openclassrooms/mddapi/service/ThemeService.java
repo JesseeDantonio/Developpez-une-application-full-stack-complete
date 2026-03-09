@@ -27,8 +27,6 @@ public class ThemeService {
         this.userRepository = userRepository;
     }
 
-
-
     public List<ThemeDTO> getAllThemes() {
         List<ThemeDTO> themes = new ArrayList<>();
         themeRepository.findAll().forEach(rental -> {
@@ -98,7 +96,7 @@ public class ThemeService {
     public List<ThemeDTO> getSubscribedThemes(Integer userId) {
         UserEntity user = userRepository.findById(userId).orElseThrow();
         return user.getSubscribedThemes().stream()
-                .map(this::toDTO) // Ta méthode de mapping existante
+                .map(this::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -129,6 +127,5 @@ public class ThemeService {
         entity.setCreatedAt(dto.getCreatedAt());
         entity.setUpdatedAt(dto.getUpdatedAt());
         return entity;
-
     }
 }
