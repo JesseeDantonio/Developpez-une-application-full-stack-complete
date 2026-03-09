@@ -7,9 +7,15 @@
         </p>
 
         <div class="action">
-            <button class="violet-btn">
+            @if (theme.isSubscribed) {
+            <button (click)="unsubscribeFromTheme(theme.id)" class="violet-btn">
+                Déjà abonné
+            </button>
+            } @else {
+            <button (click)="subscribeToTheme(theme.id)" class="violet-btn">
                 S'abonner
             </button>
+        }
         </div>
     </article>
     } @empty {
