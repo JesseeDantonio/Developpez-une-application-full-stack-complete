@@ -6,9 +6,9 @@ import { Article } from 'src/app/core/models/article.model';
 import { ThemeService } from 'src/app/features/theme/services/theme.service';
 import { CommentService } from 'src/app/features/comments/services/comment.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { Comment } from 'src/app/core/models/comment.model';
 import { Payload } from 'src/app/core/models/payload.interface';
+import { TokenService } from 'src/app/core/services/token.service';
 
 @Component({
   selector: 'app-detail-article',
@@ -29,7 +29,7 @@ export class DetailArticleComponent implements OnInit {
     private userService: UserService,
     private themeService: ThemeService,
     private commentService: CommentService,
-    private authService: AuthService,
+    private tokenService: TokenService,
     private fb: FormBuilder,
   ) {
     this.commentCreateForm = this.fb.group({
@@ -93,7 +93,7 @@ export class DetailArticleComponent implements OnInit {
       return;
     }
 
-    const payload : Payload | null = this.authService.getPayloadFromToken();;
+    const payload : Payload | null = this.tokenService.getPayloadFromToken();;
     if (payload === null) {
       return;
     }

@@ -11,9 +11,9 @@ import { CreateArticleDto } from 'src/app/core/dto/out/CreateArticleDto';
 import { ThemeService } from 'src/app/features/theme/services/theme.service';
 import { ThemeDto } from 'src/app/core/dto/in/ThemeDto';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { Observable } from 'rxjs/internal/Observable';
 import { Payload } from 'src/app/core/models/payload.interface';
+import { TokenService } from 'src/app/core/services/token.service';
 
 @Component({
   selector: 'app-create-article',
@@ -31,7 +31,7 @@ export class CreateArticleComponent implements OnInit {
     private router: Router,
     private articleService: ArticleService,
     private themeService: ThemeService,
-    private authService: AuthService
+    private tokenService: TokenService,
   ) {
     this.articleCreateForm = this.fb.group({
       theme: ['', Validators.required],
@@ -53,7 +53,7 @@ export class CreateArticleComponent implements OnInit {
       return;
     }
 
-    const payload : Payload | null = this.authService.getPayloadFromToken();;
+    const payload : Payload | null = this.tokenService.getPayloadFromToken();;
     if (payload === null) {
       return;
     }
