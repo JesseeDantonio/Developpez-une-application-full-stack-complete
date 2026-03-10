@@ -7,23 +7,43 @@
                 <div>
                     <label for="name">Nom d'utilisateur</label>
                 </div>
-                <input type="text" id="username" name="user_username" formControlName="username"/>
+                <input type="text" id="username" name="user_username" formControlName="username" />
             </li>
             <li>
                 <div>
                     <label for="mail">Adresse e-mail</label>
                 </div>
-                <input type="email" id="mail" name="user_mail" formControlName="email"/>
+                <input type="email" id="mail" name="user_mail" formControlName="email" />
             </li>
             <li>
                 <div>
                     <label for="password">Mot de passe</label>
                 </div>
-                <input type="password" name="user_password" formControlName="password"/>
+                <input type="password" name="user_password" formControlName="password" />
             </li>
         </ul>
+
+        @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+            @if (registerForm.get('email')?.hasError('email')) {
+            <span class="error-text">Le format de l'email est invalide.</span>
+            }
+        }
+
+        @if (registerForm.get('password')?.hasError('passwordStrength')) {
+        <div class="password-rules">
+            <p>Le mot de passe doit contenir :</p>
+            <ul>
+                <li [class.valid]="passwordErrors?.isValidLength">Au moins 8 caractères</li>
+                <li [class.valid]="passwordErrors?.hasUpperCase">Une majuscule</li>
+                <li [class.valid]="passwordErrors?.hasLowerCase">Une minuscule</li>
+                <li [class.valid]="passwordErrors?.hasNumeric">Un chiffre</li>
+                <li [class.valid]="passwordErrors?.hasSpecial">Un caractère spécial</li>
+            </ul>
+        </div>
+        }
+
         <div class="center-button">
-            <button class="violet-btn" >S'inscrire</button>
+            <button class="violet-btn">S'inscrire</button>
         </div>
     </form>
 </div>
