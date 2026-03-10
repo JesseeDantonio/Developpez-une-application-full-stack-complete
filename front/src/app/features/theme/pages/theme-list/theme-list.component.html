@@ -8,11 +8,11 @@
 
         <div class="action">
             @if (theme.isSubscribed) {
-            <button (click)="unsubscribeFromTheme(theme.id)" class="violet-btn">
+            <button [disabled]="loadingThemes.has(theme.id)" (click)="unsubscribeFromTheme(theme.id)" class="violet-btn">
                 Déjà abonné
             </button>
             } @else {
-            <button (click)="subscribeToTheme(theme.id)" class="violet-btn">
+            <button [disabled]="loadingThemes.has(theme.id)" (click)="subscribeToTheme(theme.id)" class="violet-btn">
                 S'abonner
             </button>
         }
