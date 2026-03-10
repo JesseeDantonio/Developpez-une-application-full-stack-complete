@@ -19,17 +19,12 @@ export class LayoutComponent implements OnInit {
     .pipe(map((result) => result.matches));
 
   constructor(
-    private location: Location,
-    private router: Router,
+    private router: Router
   ) {}
 
   ngOnInit(): void {}
 
   public goToHome() {
     this.router.navigate(['/']);
-  }
-
-  public goBack() {
-    this.location.back();
   }
 }
