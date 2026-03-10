@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { ArticleService } from '../../services/article.service';
 import { UserService } from 'src/app/features/user/services/user.service';
 import { Article } from 'src/app/core/models/article.model';
+import { ThemeService } from 'src/app/features/theme/services/theme.service';
+import { TokenService } from 'src/app/core/services/token.service';
+import { Payload } from 'src/app/core/models/payload.interface';
 
 @Component({
   selector: 'app-article',
@@ -17,26 +20,40 @@ export class ArticleComponent implements OnInit {
   constructor(
     private router: Router,
     private articleService: ArticleService,
-    private userService: UserService
+    private userService: UserService,
+    private themeService: ThemeService,
+    private tokenService: TokenService
   ) { }
 
   ngOnInit() {
+
+    const payload: Payload | null = this.tokenService.getPayloadFromToken();
+
+    if (payload == null) {
+      return;
+    }
+
     this.articleService.getAll().subscribe((articles) => {
       this.userService.getAll().subscribe((users) => {
         for (let article of articles) {
-          const user = users.find((u) => u.id === article.userId as unknown as number);
-          if (user) {
-            this.articles.push({
-              id: article.id,
-              title: article.title,
-              content: article.content,
-              userId: article.userId,
-              createdAt: article.createdAt,
-              updatedAt: article.updatedAt,
-              themeIds: article.themeIds,
-              userName: user.name
-            })
-          }
+
+          this.themeService.getSubscribedThemes(payload.sub).subscribe((themes) => {
+            if (themes.some((t) => article.themeIds.includes(t.id))) {
+              const user = users.find((u) => u.id === article.userId as unknown as number);
+              if (user) {
+                this.articles.push({
+                  id: article.id,
+                  title: article.title,
+                  content: article.content,
+                  userId: article.userId,
+                  createdAt: article.createdAt,
+                  updatedAt: article.updatedAt,
+                  themeIds: article.themeIds,
+                  userName: user.name
+                })
+              }
+            }
+          });
         }
       });
     });
