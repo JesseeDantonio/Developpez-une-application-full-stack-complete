@@ -9,7 +9,7 @@ import { ArticleComponent } from './features/article/pages/article-list/article-
 import { ThemeComponent } from './features/theme/pages/theme-list/theme-list.component';
 import { CreateArticleComponent } from './features/article/pages/article-create/article-create.component';
 import { DetailArticleComponent } from './features/article/pages/article-detail/article-detail.component';
-import { ProfilComponent } from './features/profil/profil.component';
+import { ProfilComponent } from './features/profil/pages/profile-edit/profil-edit.component';
 import { unauthGuard } from './core/guards/unauth.guard';
 import { authGuard } from './core/guards/auth.guard';
 
