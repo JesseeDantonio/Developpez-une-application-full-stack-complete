@@ -3,8 +3,8 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-profil',
   imports: [],
-  templateUrl: './profil.component.html',
-  styleUrl: './profil.component.scss',
+  templateUrl: './profil-edit.component.html',
+  styleUrl: './profil-edit.component.scss',
 })
 export class ProfilComponent {
 
