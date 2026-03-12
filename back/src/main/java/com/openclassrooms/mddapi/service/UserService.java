@@ -4,6 +4,7 @@ import com.openclassrooms.mddapi.dto.in.UserCreateDTO;
 import com.openclassrooms.mddapi.dto.out.UserDTO;
 import com.openclassrooms.mddapi.entity.UserEntity;
 import com.openclassrooms.mddapi.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -14,9 +15,11 @@ import java.util.Optional;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<UserDTO> getAllUsers() {
@@ -50,9 +53,9 @@ public class UserService {
     public UserDTO updateUser(Integer id, UserCreateDTO user) {
         UserEntity existingUser = userRepository.findById(id).orElse(null);
         if (existingUser != null) {
-            if (user.getEmail() != null) existingUser.setEmail(user.getEmail());
-            if (user.getName() != null) existingUser.setName(user.getName());
-            if (user.getPassword() != null) existingUser.setPassword(user.getPassword());
+            if (user.getEmail() != null && !user.getEmail().isEmpty()) existingUser.setEmail(user.getEmail());
+            if (user.getName() != null && !user.getName().isEmpty()) existingUser.setName(user.getName());
+            if (user.getPassword() != null && !user.getPassword().isEmpty()) existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
             existingUser.setUpdatedAt(LocalDate.now().toString());
             userRepository.save(existingUser);
             return toDTO(existingUser);
