@@ -1,18 +1,18 @@
 <div class="center-page">
     <h1>Profil utilisateur</h1>
-    <form>
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
         <ul>
             <li>
-                <input placeholder="Username" type="text" id="username" name="username" />
+                <input placeholder="Username" type="text" id="username" name="username" formControlName="name" />
             </li>
             <li>
-                <input placeholder="email@email.fr" type="email" id="email" name="email" />
+                <input placeholder="email@email.fr" type="email" id="email" name="email" formControlName="email" />
             </li>
             <li>
-                <input placeholder="Mot de passe" type="password" id="password" name="password" />
+                <input placeholder="Mot de passe" type="password" id="password" name="password" formControlName="password" />
             </li>
         </ul>
-        <div class="center-button">
+        <div (click)="onSubmit()" class="center-button">
             <button class="violet-btn">Sauvegarder</button>
         </div>
     </form>
