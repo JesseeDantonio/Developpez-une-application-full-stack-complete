@@ -56,7 +56,7 @@ public class AuthService {
         UserEntity userCreated = userRepo.save(userEntity);
 
         TokenDTO dto = new TokenDTO(
-                jsonWebToken.generateToken(userCreated.getId().toString(), userCreated.getName() , ACCESS_TOKEN_EXPIRATION)
+                jsonWebToken.generateToken(userCreated.getId().toString(), userCreated.getName(), ACCESS_TOKEN_EXPIRATION)
         );
 
         return dto;
@@ -64,12 +64,11 @@ public class AuthService {
 
 
     public TokenDTO login(UserAuthDTO userAuth) {
-        Optional<UserEntity> user = userRepo.findByEmail(userAuth.getEmail());
+        Optional<UserEntity> user = Optional.of(userRepo.findByEmailOrName(userAuth.getIdentifiant(), userAuth.getIdentifiant())
+                .orElseThrow(() -> new RuntimeException("Identifiant ou mot de passe incorrect")));
+
         if (user.isEmpty()) {
-            throw new RuntimeException("Utilisateur inconnu");
-        }
-        if (!passwordEncoder.matches(userAuth.getPassword(), user.get().getPassword())) {
-            throw new RuntimeException("Mot de passe incorrect");
+            throw new RuntimeException("Identifiant ou mot de passe incorrect");
         }
 
         String accessToken = jsonWebToken.generateToken(user.get().getId().toString(), user.get().getName(), ACCESS_TOKEN_EXPIRATION);
