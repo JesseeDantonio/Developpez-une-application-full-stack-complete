@@ -27,6 +27,7 @@ export const routes: Routes = [
   {
     path: '', // Ce path vide sert de "préfixe" pour les enfants
     canActivate: [unauthGuard], // Seules les personnes non authentifiées peuvent accéder à ces routes
+    canActivateChild: [unauthGuard], // Seules les personnes non authentifiées peuvent accéder à ces routes enfants
     component: LayoutComponent,
     children: [
       { path: 'login', component: LoginComponent },
@@ -37,6 +38,7 @@ export const routes: Routes = [
   {
     path: '',
     canActivate: [authGuard], // Seules les personnes authentifiées peuvent accéder à ces routes
+    canActivateChild: [authGuard], // Seules les personnes authentifiées peuvent accéder à ces routes enfants
     component: AuthLayoutComponent,
     children: [
       { path: 'article', component: ArticleComponent },
