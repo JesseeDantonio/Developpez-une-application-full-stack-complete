@@ -6,6 +6,8 @@ import com.openclassrooms.mddapi.dto.out.UserDTO;
 import com.openclassrooms.mddapi.dto.out.auth.TokenDTO;
 import com.openclassrooms.mddapi.entity.RefreshTokenEntity;
 import com.openclassrooms.mddapi.entity.UserEntity;
+import com.openclassrooms.mddapi.exception.ResourceAlreadyExistException;
+import com.openclassrooms.mddapi.exception.ResourceNotFoundException;
 import com.openclassrooms.mddapi.feature.JsonWebToken;
 import com.openclassrooms.mddapi.repository.RefreshTokenRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
@@ -39,7 +41,7 @@ public class AuthService {
     public TokenDTO register(UserCreateDTO userAuth) {
         Optional<UserEntity> userExist = userRepo.findByEmail(userAuth.getEmail());
         if (userExist.isPresent()) {
-            throw new RuntimeException("Utilisateur déjà existant");
+            throw new ResourceAlreadyExistException("User already exist");
         }
 
         userAuth.setEmail(userAuth.getEmail());
@@ -64,8 +66,7 @@ public class AuthService {
 
 
     public TokenDTO login(UserAuthDTO userAuth) {
-        Optional<UserEntity> user = Optional.of(userRepo.findByEmailOrName(userAuth.getIdentifiant(), userAuth.getIdentifiant())
-                .orElseThrow(() -> new RuntimeException("Identifiant ou mot de passe incorrect")));
+        Optional<UserEntity> user = userRepo.findByEmailOrName(userAuth.getIdentifiant(), userAuth.getIdentifiant());
 
         if (user.isEmpty()) {
             throw new RuntimeException("Identifiant ou mot de passe incorrect");
@@ -79,7 +80,7 @@ public class AuthService {
     public UserDTO me(String email) {
         Optional<UserEntity> user = userRepo.findByEmail(email);
         if (user.isEmpty()) {
-            throw new RuntimeException("Utilisateur inconnu");
+            throw new ResourceNotFoundException("User not found");
         }
         UserDTO userDTO = new UserDTO();
         userDTO.setEmail(user.get().getEmail());
