@@ -38,7 +38,13 @@ public class ThemeService {
     }
 
     public ThemeDTO getThemeById(Integer id) {
-        return toDTO(themeRepository.findById(id).orElseThrow());
+        Optional<ThemeEntity> theme = themeRepository.findById(id);
+
+        if (theme.isEmpty()) {
+            throw new ResourceNotFoundException("Theme not found");
+        }
+
+        return toDTO(theme.get());
     }
 
     public CreateThemeDTO createTheme(CreateThemeDTO themeDto) {
@@ -49,17 +55,18 @@ public class ThemeService {
     }
 
     public ThemeDTO updateTheme(Integer id, CreateThemeDTO createThemeDTO) {
-        ThemeEntity existingTh = themeRepository.findById(id).orElse(null);
+        Optional<ThemeEntity> existingTh = themeRepository.findById(id);
 
-        if (existingTh != null) {
-            existingTh.setName(createThemeDTO.getName());
-            existingTh.setDescription(createThemeDTO.getDescription());
-            existingTh.setUpdatedAt(LocalDate.now().toString());
-            themeRepository.save(existingTh);
-            return toDTO(existingTh);
-        } else {
-            return null;
+        if (existingTh.isEmpty()) {
+            throw new ResourceNotFoundException("Theme not found");
         }
+
+        existingTh.get().setName(createThemeDTO.getName());
+        existingTh.get().setDescription(createThemeDTO.getDescription());
+        existingTh.get().setUpdatedAt(LocalDate.now().toString());
+        themeRepository.save(existingTh.get());
+
+        return toDTO(existingTh.get());
     }
 
     public void deleteTheme(Integer id) {
