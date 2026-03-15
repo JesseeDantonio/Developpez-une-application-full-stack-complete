@@ -4,6 +4,7 @@ import com.openclassrooms.mddapi.dto.in.CreateThemeDTO;
 import com.openclassrooms.mddapi.dto.out.ThemeDTO;
 import com.openclassrooms.mddapi.entity.ThemeEntity;
 import com.openclassrooms.mddapi.entity.UserEntity;
+import com.openclassrooms.mddapi.exception.ResourceNotFoundException;
 import com.openclassrooms.mddapi.repository.ThemeRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -76,33 +78,46 @@ public class ThemeService {
     // S'abonner à un thème
     @Transactional
     public void subscribe(Integer userId, Integer themeId) {
-        UserEntity user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        ThemeEntity theme = themeRepository.findById(themeId)
-                .orElseThrow(() -> new RuntimeException("Theme not found"));
+        Optional<UserEntity> user = userRepository.findById(userId);
+        if (user.isEmpty()) {
+            throw new ResourceNotFoundException("User not found");
+        }
+
+        Optional<ThemeEntity> theme = themeRepository.findById(themeId);
+        if (theme.isEmpty()) {
+            throw new ResourceNotFoundException("Theme not found");
+        }
 
         // Hibernate gère l'insertion dans la table theme_subscription
-        user.getSubscribedThemes().add(theme);
-        userRepository.save(user);
+        user.get().getSubscribedThemes().add(theme.get());
+        userRepository.save(user.get());
     }
 
     // Se désabonner
     @Transactional
     public void unsubscribe(Integer userId, Integer themeId) {
-        UserEntity user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        ThemeEntity theme = themeRepository.findById(themeId)
-                .orElseThrow(() -> new RuntimeException("Theme not found"));
+        Optional<UserEntity> user = userRepository.findById(userId);
+        if (user.isEmpty()) {
+            throw new ResourceNotFoundException("User not found");
+        }
 
-        user.getSubscribedThemes().remove(theme);
-        userRepository.save(user);
+        Optional<ThemeEntity> theme = themeRepository.findById(themeId);
+        if (theme.isEmpty()) {
+            throw new ResourceNotFoundException("Theme not found");
+        }
+
+        user.get().getSubscribedThemes().remove(theme.get());
+        userRepository.save(user.get());
     }
 
     // Récupérer les abonnements d'un utilisateur (pour le profil)
     @Transactional(readOnly = true)
     public List<ThemeDTO> getSubscribedThemes(Integer userId) {
-        UserEntity user = userRepository.findById(userId).orElseThrow();
-        return user.getSubscribedThemes().stream()
+        Optional<UserEntity> user = userRepository.findById(userId);
+        if (user.isEmpty()) {
+            throw new ResourceNotFoundException("User not found");
+        }
+        return user.get().getSubscribedThemes().stream()
                 .map(this::toDTO)
                 .collect(Collectors.toList());
     }
