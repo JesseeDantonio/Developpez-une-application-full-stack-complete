@@ -24,45 +24,24 @@ public class  AuthController {
 
     // Inscription
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody UserCreateDTO userCreateDTO) {
-        try {
-            TokenDTO tokenDTO = authService.register(userCreateDTO);
-            return ResponseEntity.ok(tokenDTO);
-        } catch (RuntimeException e) {
-            return ResponseEntity
-                    .status(HttpStatus.UNAUTHORIZED)
-                    .body(Collections.singletonMap("L'identification a échouée.", e.getMessage()));
-        }
+    public ResponseEntity<TokenDTO> register(@RequestBody UserCreateDTO userCreateDTO) {
+        TokenDTO tokenDTO = authService.register(userCreateDTO);
+        return ResponseEntity.ok(tokenDTO);
     }
 
     // Connexion
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserAuthDTO userAuthDTO) {
-        try {
-            TokenDTO tokens = authService.login(userAuthDTO);
-            return ResponseEntity.ok(tokens);
-        } catch (RuntimeException e) {
-            // On peut retourner un objet avec un message
-            return ResponseEntity
-                    .status(HttpStatus.UNAUTHORIZED)
-                    .body(Collections.singletonMap("L'identification a échouée.", e.getMessage()));
-        }
+    public ResponseEntity<TokenDTO> login(@RequestBody UserAuthDTO userAuthDTO) {
+        TokenDTO tokens = authService.login(userAuthDTO);
+        return ResponseEntity.ok(tokens);
     }
 
     // Infos utilisateur (profil)
     @GetMapping("/me")
-    public ResponseEntity<?> me() {
+    public ResponseEntity<UserDTO> me() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        try {
-            String email = authentication.getName();
-            UserDTO user = authService.me(email);
-            return ResponseEntity.ok(user);
-        } catch (RuntimeException e) {
-            Map<String, String> error = Map.of(
-                    "error", "Impossible de récupérer le profil.",
-                    "details", e.getMessage()
-            );
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
-        }
+        String email = authentication.getName();
+        UserDTO user = authService.me(email);
+        return ResponseEntity.ok(user);
     }
 }
