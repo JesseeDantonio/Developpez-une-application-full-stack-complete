@@ -5,6 +5,7 @@ import com.openclassrooms.mddapi.dto.out.ArticleDTO;
 import com.openclassrooms.mddapi.entity.ArticleEntity;
 import com.openclassrooms.mddapi.entity.ThemeEntity;
 import com.openclassrooms.mddapi.entity.UserEntity;
+import com.openclassrooms.mddapi.exception.ResourceNotFoundException;
 import com.openclassrooms.mddapi.repository.ArticleRepository;
 import com.openclassrooms.mddapi.repository.ThemeRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ArticleService {
@@ -39,7 +41,12 @@ public class ArticleService {
     }
 
     public ArticleDTO getArticleById(Integer id) {
-        return toDTO(articleRepository.findById(id).orElseThrow());
+        Optional<ArticleEntity> article = articleRepository.findById(id);
+        if (article.isEmpty()) {
+            throw new ResourceNotFoundException("Article not found");
+        }
+
+        return toDTO(article.get());
     }
 
     public CreateArticleDTO createArticle(CreateArticleDTO articleDto) {
@@ -50,19 +57,23 @@ public class ArticleService {
     }
 
     public ArticleDTO updateArticle(Integer id, CreateArticleDTO articleDto) {
-        ArticleEntity existingArticle = articleRepository.findById(id).orElse(null);
-        if (existingArticle != null) {
-            if (articleDto.getTitle() != null && !articleDto.getTitle().isEmpty()) existingArticle.setTitle(articleDto.getTitle());
-            if (articleDto.getContent() != null && !articleDto.getContent().isEmpty()) existingArticle.setContent(articleDto.getContent());
-            if (articleDto.getThemeIds() != null && !articleDto.getThemeIds().isEmpty()) {
-                existingArticle.setThemes(new HashSet<>(themeRepository.findAllById(articleDto.getThemeIds())));
-            }
-            existingArticle.setUpdatedAt(LocalDate.now().toString());
-            articleRepository.save(existingArticle);
-            return toDTO(existingArticle);
-        } else {
-            return null;
+        Optional<ArticleEntity> existingArticle = articleRepository.findById(id);
+
+        if (existingArticle.isEmpty()) {
+            throw new ResourceNotFoundException("Article not found");
         }
+
+        if (!articleDto.getTitle().isEmpty())
+            existingArticle.get().setTitle(articleDto.getTitle());
+        if (!articleDto.getContent().isEmpty())
+            existingArticle.get().setContent(articleDto.getContent());
+        if (!articleDto.getThemeIds().isEmpty())
+            existingArticle.get().setThemes(new HashSet<>(themeRepository.findAllById(articleDto.getThemeIds())));
+
+        existingArticle.get().setUpdatedAt(LocalDate.now().toString());
+        articleRepository.save(existingArticle.get());
+        return toDTO(existingArticle.get());
+
     }
 
     public void deleteArticle(Integer id) {
@@ -74,7 +85,7 @@ public class ArticleService {
         entity.setTitle(dto.getTitle());
         entity.setContent(dto.getContent());
         UserEntity owner = userRepository.findById(dto.getUserId().intValue())
-                .orElseThrow(() -> new RuntimeException("Owner not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         entity.setUser(owner);
 
         if (dto.getThemeIds() != null && !dto.getThemeIds().isEmpty()) {
