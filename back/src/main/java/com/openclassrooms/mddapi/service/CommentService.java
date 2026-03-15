@@ -5,6 +5,7 @@ import com.openclassrooms.mddapi.dto.out.CommentDTO;
 import com.openclassrooms.mddapi.entity.ArticleEntity;
 import com.openclassrooms.mddapi.entity.CommentEntity;
 import com.openclassrooms.mddapi.entity.UserEntity;
+import com.openclassrooms.mddapi.exception.ResourceNotFoundException;
 import com.openclassrooms.mddapi.repository.ArticleRepository;
 import com.openclassrooms.mddapi.repository.CommentRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
@@ -38,7 +39,12 @@ public class CommentService {
     }
 
     public CommentDTO getCommentById(Integer id) {
-        return toDTO(commentRepository.findById(id).orElseThrow());
+        Optional<CommentEntity> comment = commentRepository.findById(id);
+        if (comment.isEmpty()) {
+            throw new ResourceNotFoundException("Comment not found");
+        }
+
+        return toDTO(comment.get());
     }
 
     public CreateCommentDTO createComment(CreateCommentDTO commentDto) {
@@ -55,10 +61,10 @@ public class CommentService {
         CommentEntity entity = new CommentEntity();
         entity.setContent(dto.getContent());
         UserEntity owner = userRepository.findById(dto.getUserId().intValue())
-                .orElseThrow(() -> new RuntimeException("Owner not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         entity.setUser(owner);
         Optional<ArticleEntity> article = articleRepository.findById(dto.getArticleId().intValue());
-        entity.setArticle(article.orElseThrow(() -> new RuntimeException("Article not found")));
+        entity.setArticle(article.orElseThrow(() -> new ResourceNotFoundException("Article not found")));
         entity.setCreatedAt(dto.getCreatedAt());
         return entity;
     }
