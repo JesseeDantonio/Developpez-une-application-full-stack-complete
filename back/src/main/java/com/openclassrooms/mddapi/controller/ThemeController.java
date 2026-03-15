@@ -4,6 +4,7 @@ import com.openclassrooms.mddapi.dto.in.CreateThemeDTO;
 import com.openclassrooms.mddapi.dto.out.ThemeDTO;
 import com.openclassrooms.mddapi.feature.JsonWebToken;
 import com.openclassrooms.mddapi.service.ThemeService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,32 +26,37 @@ public class ThemeController {
 
     // GET /api/themes/{id}
     @GetMapping("/{id}")
-    public ThemeDTO getThemeById(@PathVariable Integer id) {
-        return themeService.getThemeById(id);
+    public ResponseEntity<ThemeDTO> getThemeById(@PathVariable Integer id) {
+        ThemeDTO themeDTO = themeService.getThemeById(id);
+        return ResponseEntity.ok(themeDTO);
     }
 
     // GET /api/themes
     @GetMapping
-    public List<ThemeDTO> getAllThemes() {
-        return themeService.getAllThemes();
+    public ResponseEntity<List<ThemeDTO>> getAllThemes() {
+        List<ThemeDTO> themes = themeService.getAllThemes();
+        return ResponseEntity.ok(themes);
     }
 
     // POST /api/themes
     @PostMapping
-    public CreateThemeDTO createTheme(@RequestBody CreateThemeDTO themeDto) {
-        return themeService.createTheme(themeDto);
+    public ResponseEntity<CreateThemeDTO> createTheme(@RequestBody CreateThemeDTO themeDto) {
+        CreateThemeDTO createdTheme = themeService.createTheme(themeDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdTheme);
     }
 
     // PUT /api/themes/{id}
     @PutMapping("/{id}")
-    public ThemeDTO updateTheme(@PathVariable Integer id, @RequestBody CreateThemeDTO themeDto) {
-        return themeService.updateTheme(id, themeDto);
+    public ResponseEntity<ThemeDTO> updateTheme(@PathVariable Integer id, @RequestBody CreateThemeDTO themeDto) {
+        ThemeDTO updatedTheme = themeService.updateTheme(id, themeDto);
+        return ResponseEntity.ok(updatedTheme);
     }
 
     // DELETE /api/themes/{id}
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
         themeService.deleteTheme(id);
+        return ResponseEntity.noContent().build();
     }
 
     // POST /api/themes/{id}/subscribe
@@ -74,7 +80,8 @@ public class ThemeController {
 
     // GET /api/themes/{id}/subscribers
     @GetMapping("/{id}/subscribers")
-    public List<ThemeDTO> getSubscribers(@PathVariable Integer id) {
-        return themeService.getSubscribedThemes(id);
+    public ResponseEntity<List<ThemeDTO>> getSubscribers(@PathVariable Integer id) {
+        List<ThemeDTO> themeDTOS = themeService.getSubscribedThemes(id);
+        return ResponseEntity.ok(themeDTOS);
     }
 }
