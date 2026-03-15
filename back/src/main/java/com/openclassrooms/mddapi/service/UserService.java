@@ -3,6 +3,7 @@ package com.openclassrooms.mddapi.service;
 import com.openclassrooms.mddapi.dto.in.UserCreateDTO;
 import com.openclassrooms.mddapi.dto.out.UserDTO;
 import com.openclassrooms.mddapi.entity.UserEntity;
+import com.openclassrooms.mddapi.exception.ResourceNotFoundException;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -40,7 +41,7 @@ public class UserService {
     public UserDTO getUserById(Integer id) {
         Optional<UserEntity> user = userRepository.findById(id);
         if (user.isEmpty()) {
-            return null;
+            throw new ResourceNotFoundException("User not found");
         }
         return toDTO(user.get());
     }
@@ -51,17 +52,20 @@ public class UserService {
     }
 
     public UserDTO updateUser(Integer id, UserCreateDTO user) {
-        UserEntity existingUser = userRepository.findById(id).orElse(null);
-        if (existingUser != null) {
-            if (user.getEmail() != null && !user.getEmail().isEmpty()) existingUser.setEmail(user.getEmail());
-            if (user.getName() != null && !user.getName().isEmpty()) existingUser.setName(user.getName());
-            if (user.getPassword() != null && !user.getPassword().isEmpty()) existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
-            existingUser.setUpdatedAt(LocalDate.now().toString());
-            userRepository.save(existingUser);
-            return toDTO(existingUser);
-        } else {
-            return null;
+        Optional<UserEntity> existingUser = userRepository.findById(id);
+
+        if (existingUser.isEmpty()) {
+            throw new ResourceNotFoundException("User not found");
         }
+
+        if (!user.getEmail().isEmpty()) existingUser.get().setEmail(user.getEmail());
+        if (!user.getName().isEmpty()) existingUser.get().setName(user.getName());
+        if (!user.getPassword().isEmpty()) existingUser.get().setPassword(passwordEncoder.encode(user.getPassword()));
+
+        existingUser.get().setUpdatedAt(LocalDate.now().toString());
+        userRepository.save(existingUser.get());
+
+        return toDTO(existingUser.get());
     }
 
     public void deleteUser(Integer id) {
