@@ -77,6 +77,6 @@ export class CreateArticleComponent implements OnInit {
       },
     });
 
-    this.router.navigate(['/articles']);
+    this.router.navigate(['/article']);
   }
 }
