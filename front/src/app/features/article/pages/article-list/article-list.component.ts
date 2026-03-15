@@ -16,6 +16,7 @@ import { Payload } from 'src/app/core/models/payload.interface';
 export class ArticleComponent implements OnInit {
 
   public articles: Article[] = [];
+  public sortByAsc: boolean = true;
 
   constructor(
     private router: Router,
@@ -24,6 +25,24 @@ export class ArticleComponent implements OnInit {
     private themeService: ThemeService,
     private tokenService: TokenService
   ) { }
+
+  sortByDateDesc(articles: Article[]): Article[] {
+    return articles.sort((a, b) => new Date(b.createdAt.toString()).getTime() - new Date(a.createdAt.toString()).getTime());
+  }
+
+  sortByDateAsc(articles: Article[]): Article[] {
+    return articles.sort((a, b) => new Date(a.createdAt.toString()).getTime() - new Date(b.createdAt.toString()).getTime());
+  }
+
+  toggleSortOrder() {
+    this.sortByAsc = !this.sortByAsc;
+
+    if (this.sortByAsc) {
+      this.articles = this.sortByDateAsc(this.articles);
+    } else {
+      this.articles = this.sortByDateDesc(this.articles);
+    }
+  }
 
   ngOnInit() {
 
@@ -56,6 +75,9 @@ export class ArticleComponent implements OnInit {
           });
         }
       });
+      if (this.sortByAsc) {
+        this.articles = this.sortByDateAsc(this.articles);
+      }
     });
   }
 
