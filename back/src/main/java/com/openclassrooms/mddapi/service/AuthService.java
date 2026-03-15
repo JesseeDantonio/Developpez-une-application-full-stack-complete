@@ -57,11 +57,9 @@ public class AuthService {
 
         UserEntity userCreated = userRepo.save(userEntity);
 
-        TokenDTO dto = new TokenDTO(
+        return new TokenDTO(
                 jsonWebToken.generateToken(userCreated.getId().toString(), userCreated.getName(), ACCESS_TOKEN_EXPIRATION)
         );
-
-        return dto;
     }
 
 
@@ -72,9 +70,7 @@ public class AuthService {
             throw new RuntimeException("Identifiant ou mot de passe incorrect");
         }
 
-        String accessToken = jsonWebToken.generateToken(user.get().getId().toString(), user.get().getName(), ACCESS_TOKEN_EXPIRATION);
-
-        return new TokenDTO(accessToken);
+        return new TokenDTO(jsonWebToken.generateToken(user.get().getId().toString(), user.get().getName(), ACCESS_TOKEN_EXPIRATION));
     }
 
     public UserDTO me(String email) {
