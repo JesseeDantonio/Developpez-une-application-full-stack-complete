@@ -22,21 +22,32 @@ public class  AuthController {
         this.authService = authService;
     }
 
-    // Inscription
+    /**
+     * Inscrit un nouvel utilisateur.
+     * @param userCreateDTO Les données du nouvel utilisateur
+     * @return La réponse HTTP avec les détails du token créé
+     */
     @PostMapping("/register")
     public ResponseEntity<TokenDTO> register(@RequestBody UserCreateDTO userCreateDTO) {
         TokenDTO tokenDTO = authService.register(userCreateDTO);
         return ResponseEntity.ok(tokenDTO);
     }
 
-    // Connexion
+    /**
+     * Connecte un utilisateur.
+     * @param userAuthDTO Les données de connexion de l'utilisateur
+     * @return La réponse HTTP avec les détails du token créé
+     */
     @PostMapping("/login")
     public ResponseEntity<TokenDTO> login(@RequestBody UserAuthDTO userAuthDTO) {
         TokenDTO tokens = authService.login(userAuthDTO);
         return ResponseEntity.ok(tokens);
     }
 
-    // Infos utilisateur (profil)
+    /**
+     * Récupère les informations de l'utilisateur connecté.
+     * @return La réponse HTTP avec les détails de l'utilisateur
+     */
     @GetMapping("/me")
     public ResponseEntity<UserDTO> me() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
