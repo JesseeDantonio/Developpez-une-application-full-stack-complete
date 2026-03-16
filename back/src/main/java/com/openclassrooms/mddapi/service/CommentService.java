@@ -28,6 +28,10 @@ public class CommentService {
         this.articleRepository = articleRepository;
     }
 
+    /**
+     * Récupère tous les commentaires.
+     * @return Une liste de CommentDTO représentant les commentaires
+     */
     public List<CommentDTO> getAllComments() {
         List<CommentDTO> comments = new ArrayList<>();
         commentRepository.findAll().forEach(article -> {
@@ -38,6 +42,11 @@ public class CommentService {
         return comments;
     }
 
+    /**
+     * Récupère un commentaire par son ID.
+     * @param id L'ID du commentaire à récupérer
+     * @return Le CommentDTO représentant le commentaire
+     */
     public CommentDTO getCommentById(Integer id) {
         Optional<CommentEntity> comment = commentRepository.findById(id);
         if (comment.isEmpty()) {
@@ -47,16 +56,30 @@ public class CommentService {
         return toDTO(comment.get());
     }
 
+    /**
+     * Crée un nouveau commentaire.
+     * @param commentDto Le DTO contenant les données du commentaire à créer
+     * @return Le DTO représentant le commentaire créé
+     */
     public CreateCommentDTO createComment(CreateCommentDTO commentDto) {
         commentDto.setCreatedAt(LocalDate.now().toString());
         commentRepository.save(toEntity(commentDto));
         return commentDto;
     }
 
+    /**
+     * Supprime un commentaire par son ID.
+     * @param id L'ID du commentaire à supprimer
+     */
     public void deleteComment(Integer id) {
         commentRepository.deleteById(id);
     }
 
+    /**
+     * Convertit un CreateCommentDTO en CommentEntity.
+     * @param dto Le DTO à convertir
+     * @return L'entité correspondante
+     */
     private CommentEntity toEntity(CreateCommentDTO dto) {
         CommentEntity entity = new CommentEntity();
         entity.setContent(dto.getContent());
@@ -69,6 +92,11 @@ public class CommentService {
         return entity;
     }
 
+    /**
+     * Convertit un CommentEntity en CommentDTO.
+     * @param entity L'entité à convertir
+     * @return Le DTO correspondant
+     */
     private CommentDTO toDTO(CommentEntity entity) {
         CommentDTO dto = new CommentDTO();
         dto.setId(entity.getId());
