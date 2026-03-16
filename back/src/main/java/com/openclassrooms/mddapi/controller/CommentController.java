@@ -18,43 +18,28 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    /**
-     * Récupère un commentaire par son ID.
-     * @param id L'ID du commentaire
-     * @return La réponse HTTP avec les détails du commentaire
-     */
+    // GET /api/comments/{id}
     @GetMapping("/{id}")
     public ResponseEntity<CommentDTO> getCommentById(@PathVariable Integer id) {
         CommentDTO commentDTO = commentService.getCommentById(id);
         return ResponseEntity.ok(commentDTO);
     }
 
-    /**
-     * Récupère tous les commentaires.
-     * @return La réponse HTTP avec la liste des commentaires
-     */
+    // GET /api/comments
     @GetMapping
     public ResponseEntity<List<CommentDTO>> getAllComments() {
         List<CommentDTO> comments = commentService.getAllComments();
         return ResponseEntity.ok(comments);
     }
 
-    /**
-     * Crée un nouveau commentaire.
-     * @param commentDto Les données du nouveau commentaire
-     * @return La réponse HTTP avec les détails du commentaire créé
-     */
+    // POST /api/comments
     @PostMapping
     public ResponseEntity<CreateCommentDTO> createComment(@RequestBody CreateCommentDTO commentDto) {
         CreateCommentDTO createdComment = commentService.createComment(commentDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdComment);
     }
 
-    /**
-     * Supprime un commentaire.
-     * @param id L'ID du commentaire à supprimer
-     * @return La réponse HTTP
-     */
+    // DELETE /api/comments/{id}
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteComment(@PathVariable Integer id) {
         commentService.deleteComment(id);

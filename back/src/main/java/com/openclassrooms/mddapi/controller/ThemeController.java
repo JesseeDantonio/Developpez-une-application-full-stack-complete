@@ -24,67 +24,42 @@ public class ThemeController {
         return Integer.parseInt(principal.getName());
     }
 
-    /**
-     * Récupère un thème par son ID.
-     * @param id L'ID du thème
-     * @return La réponse HTTP avec les détails du thème
-     */
+    // GET /api/themes/{id}
     @GetMapping("/{id}")
     public ResponseEntity<ThemeDTO> getThemeById(@PathVariable Integer id) {
         ThemeDTO themeDTO = themeService.getThemeById(id);
         return ResponseEntity.ok(themeDTO);
     }
 
-    /**
-     * Récupère tous les thèmes.
-     * @return La réponse HTTP avec la liste des thèmes
-     */
+    // GET /api/themes
     @GetMapping
     public ResponseEntity<List<ThemeDTO>> getAllThemes() {
         List<ThemeDTO> themes = themeService.getAllThemes();
         return ResponseEntity.ok(themes);
     }
 
-    /**
-     * Crée un nouveau thème.
-     * @param themeDto Les données du nouveau thème
-     * @return La réponse HTTP avec les détails du thème créé
-     */
+    // POST /api/themes
     @PostMapping
     public ResponseEntity<CreateThemeDTO> createTheme(@RequestBody CreateThemeDTO themeDto) {
         CreateThemeDTO createdTheme = themeService.createTheme(themeDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTheme);
     }
 
-    /**
-     * Met à jour un thème existant.
-     * @param id L'ID du thème à mettre à jour
-     * @param themeDto Les données du thème mis à jour
-     * @return La réponse HTTP avec les détails du thème mis à jour
-     */
+    // PUT /api/themes/{id}
     @PutMapping("/{id}")
     public ResponseEntity<ThemeDTO> updateTheme(@PathVariable Integer id, @RequestBody CreateThemeDTO themeDto) {
         ThemeDTO updatedTheme = themeService.updateTheme(id, themeDto);
         return ResponseEntity.ok(updatedTheme);
     }
 
-    /**
-     * Supprime un thème.
-     * @param id L'ID du thème à supprimer
-     * @return La réponse HTTP
-     */
+    // DELETE /api/themes/{id}
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
         themeService.deleteTheme(id);
         return ResponseEntity.noContent().build();
     }
 
-    /**
-     * Abonne un utilisateur à un thème.
-     * @param id L'ID du thème
-     * @param principal Le principal contenant les informations de l'utilisateur connecté
-     * @return La réponse HTTP
-     */
+    // POST /api/themes/{id}/subscribe
     @PostMapping("/{id}/subscribe")
     public ResponseEntity<Void> subscribe(@PathVariable Integer id, Principal principal) {
         // Récupérer l'ID de l'utilisateur connecté via le Principal ou le JWT
@@ -94,12 +69,7 @@ public class ThemeController {
         return ResponseEntity.ok().build();
     }
 
-    /**
-     * Désabonne un utilisateur d'un thème.
-     * @param id L'ID du thème
-     * @param principal Le principal contenant les informations de l'utilisateur connecté
-     * @return La réponse HTTP
-     */
+    // DELETE /api/themes/{id}/subscribe
     @DeleteMapping("/{id}/subscribe")
     public ResponseEntity<Void> unsubscribe(@PathVariable Integer id, Principal principal) {
         Integer userId = getUserIdFromPrincipal(principal);
@@ -108,11 +78,7 @@ public class ThemeController {
         return ResponseEntity.ok().build();
     }
 
-    /**
-     * Récupère les utilisateurs abonnés à un thème.
-     * @param id L'ID du thème
-     * @return La réponse HTTP avec la liste des utilisateurs abonnés
-     */
+    // GET /api/themes/{id}/subscribers
     @GetMapping("/{id}/subscribers")
     public ResponseEntity<List<ThemeDTO>> getSubscribers(@PathVariable Integer id) {
         List<ThemeDTO> themeDTOS = themeService.getSubscribedThemes(id);
