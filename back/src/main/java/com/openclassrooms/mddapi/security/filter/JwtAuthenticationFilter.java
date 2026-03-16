@@ -23,6 +23,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         super();
         this.jsonWebToken = jsonWebToken;
     }
+
+    /**
+     * Filtre les requêtes HTTP pour authentifier les utilisateurs via un token JWT.
+     * @param request La requête HTTP
+     * @param response La réponse HTTP
+     * @param filterChain La chaîne de filtres
+     * @throws ServletException En cas d'erreur de servlet
+     * @throws IOException En cas d'erreur d'entrée/sortie
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     @NonNull HttpServletResponse response,

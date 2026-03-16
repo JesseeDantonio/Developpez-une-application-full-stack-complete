@@ -24,11 +24,22 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    /**
+     * Configure le filtre d'authentification JWT.
+     * @param jsonWebToken L'instance de JsonWebToken
+     * @return L'instance de JwtAuthenticationFilter
+     */
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter(JsonWebToken jsonWebToken) {
         return new JwtAuthenticationFilter(jsonWebToken);
     }
 
+    /**
+     * Configure la chaîne de filtres de sécurité.
+     * @param http L'instance de HttpSecurity
+     * @param jwtAuthenticationFilter L'instance de JwtAuthenticationFilter
+     * @return L'instance de SecurityFilterChain
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
         http
@@ -59,16 +70,29 @@ public class SecurityConfig {
 //        return http.build();
 //    }
 
+    /**
+     * Configure l'encodeur de mots de passe.
+     * @return L'instance de PasswordEncoder
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Configure le token JWT.
+     * @param secret Le secret pour générer le token
+     * @return L'instance de JsonWebToken
+     */
     @Bean
     public JsonWebToken jsonWebToken(@Value("${jwt.secret}") String secret) {
         return new JsonWebToken(secret);
     }
 
+    /**
+     * Configure la source de configuration CORS.
+     * @return La source de configuration CORS
+     */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
