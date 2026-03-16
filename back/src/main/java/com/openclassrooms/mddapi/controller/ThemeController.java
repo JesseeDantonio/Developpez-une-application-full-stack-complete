@@ -74,7 +74,7 @@ public class ThemeController {
      * @return La réponse HTTP
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteTheme(@PathVariable Integer id) {
         themeService.deleteTheme(id);
         return ResponseEntity.noContent().build();
     }
