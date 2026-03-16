@@ -18,35 +18,55 @@ public class ArticleController {
         this.articleService = articleService;
     }
 
-    // GET /api/articles/{id}
+    /**
+     * Récupère un article par son ID.
+     * @param id L'ID de l'article
+     * @return La réponse HTTP avec les détails de l'article
+     */
     @GetMapping("/{id}")
     public ResponseEntity<ArticleDTO> getArticleById(@PathVariable Integer id) {
         ArticleDTO articleDTO = articleService.getArticleById(id);
         return ResponseEntity.ok(articleDTO);
     }
 
-    // GET /api/articles
+    /**
+     * Récupère tous les articles.
+     * @return La réponse HTTP avec la liste des articles
+     */
     @GetMapping
     public ResponseEntity<List<ArticleDTO>> getAllArticles() {
         List<ArticleDTO> articles = articleService.getAllArticles();
         return ResponseEntity.ok(articles);
     }
 
-    // POST /api/articles
+    /**
+     * Crée un nouvel article.
+     * @param articleDto Les données du nouvel article
+     * @return La réponse HTTP avec les détails de l'article créé
+     */
     @PostMapping
     public ResponseEntity<CreateArticleDTO> createArticle(@RequestBody CreateArticleDTO articleDto) {
         CreateArticleDTO createdArticle = articleService.createArticle(articleDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdArticle);
     }
 
-    // PUT /api/articles/{id}
+    /**
+     * Met à jour un article existant.
+     * @param id L'ID de l'article à mettre à jour
+     * @param articleDto Les données de l'article mis à jour
+     * @return La réponse HTTP avec les détails de l'article mis à jour
+     */
     @PutMapping("/{id}")
     public ResponseEntity<ArticleDTO> updateArticle(@PathVariable Integer id, @RequestBody CreateArticleDTO articleDto) {
         ArticleDTO updatedArticle = articleService.updateArticle(id, articleDto);
         return ResponseEntity.ok(updatedArticle);
     }
 
-    // DELETE /api/articles/{id}
+    /**
+     * Supprime un article.
+     * @param id L'ID de l'article à supprimer
+     * @return La réponse HTTP
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteArticle(@PathVariable Integer id) {
         articleService.deleteArticle(id);

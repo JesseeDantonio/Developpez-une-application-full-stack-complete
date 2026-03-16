@@ -18,35 +18,55 @@ public class UserController {
         this.userService = userService;
     }
 
-    // GET /api/users
+    /**
+     * Récupère tous les utilisateurs.
+     * @return La réponse HTTP avec la liste des utilisateurs
+     */
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         List<UserDTO> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
     }
 
-    // GET /api/users/{id}
+    /**
+     * Récupère un utilisateur par son ID.
+     * @param id L'ID de l'utilisateur
+     * @return La réponse HTTP avec les détails de l'utilisateur
+     */
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Integer id) {
         UserDTO userDTO = userService.getUserById(id);
         return ResponseEntity.ok(userDTO);
     }
 
-    // POST /api/users
+    /**
+     * Crée un nouvel utilisateur.
+     * @param userDto Les données du nouvel utilisateur
+     * @return La réponse HTTP avec les détails de l'utilisateur créé
+     */
     @PostMapping
     public ResponseEntity<UserCreateDTO> createUser(@RequestBody UserCreateDTO userDto) {
         UserCreateDTO createdUser = userService.createUser(userDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
-    // PUT /api/users/{id}
+    /**
+     * Met à jour un utilisateur existant.
+     * @param id L'ID de l'utilisateur à mettre à jour
+     * @param userDto Les données de l'utilisateur mis à jour
+     * @return La réponse HTTP avec les détails de l'utilisateur mis à jour
+     */
     @PutMapping("/{id}")
     public ResponseEntity<UserDTO> updateUser(@PathVariable Integer id, @RequestBody UserCreateDTO userDto) {
         UserDTO updatedUser = userService.updateUser(id, userDto);
         return ResponseEntity.ok(updatedUser);
     }
 
-    // DELETE /api/users/{id}
+    /**
+     * Supprime un utilisateur.
+     * @param id L'ID de l'utilisateur à supprimer
+     * @return La réponse HTTP
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
         userService.deleteUser(id);
