@@ -54,7 +54,7 @@ public class ThemeController {
 
     // DELETE /api/themes/{id}
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteTheme(@PathVariable Integer id) {
         themeService.deleteTheme(id);
         return ResponseEntity.noContent().build();
     }
