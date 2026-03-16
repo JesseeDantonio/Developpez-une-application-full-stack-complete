@@ -16,6 +16,11 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    /**
+     * Gère les exceptions de ressource non trouvée.
+     * @param ex L'exception levée
+     * @return Une réponse HTTP avec le message d'erreur
+     */
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<MessageResponse> handleResourceNotFoundException(ResourceNotFoundException ex) {
         return ResponseEntity
@@ -23,6 +28,11 @@ public class GlobalExceptionHandler {
                 .body(new MessageResponse(ex.getMessage()));
     }
 
+    /**
+     * Gère les exceptions de ressource déjà existante.
+     * @param ex L'exception levée
+     * @return Une réponse HTTP avec le message d'erreur
+     */
     @ExceptionHandler(ResourceAlreadyExistException.class)
     public ResponseEntity<MessageResponse> handleResourceAlreadyExistException(ResourceAlreadyExistException ex) {
         return ResponseEntity
@@ -30,6 +40,11 @@ public class GlobalExceptionHandler {
                 .body(new MessageResponse(ex.getMessage()));
     }
 
+    /**
+     * Gère les exceptions de validation des arguments de méthode.
+     * @param ex L'exception levée
+     * @return Une réponse HTTP avec les messages d'erreur de validation
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
@@ -41,6 +56,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
 
+    /**
+     * Gère les exceptions de runtime.
+     * @param ex L'exception levée
+     * @return Une réponse HTTP avec le message d'erreur
+     */
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<MessageResponse> handleRuntimeException(RuntimeException ex) {
         return ResponseEntity
@@ -48,6 +68,11 @@ public class GlobalExceptionHandler {
                 .body(new MessageResponse(ex.getMessage()));
     }
 
+    /**
+     * Gère les exceptions globales.
+     * @param ex L'exception levée
+     * @return Une réponse HTTP avec le message d'erreur
+     */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<MessageResponse> handleGlobalException(Exception ex) {
         return ResponseEntity
