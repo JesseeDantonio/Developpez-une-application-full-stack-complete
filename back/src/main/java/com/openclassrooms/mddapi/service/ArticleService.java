@@ -30,6 +30,10 @@ public class ArticleService {
         this.themeRepository = themeRepository;
     }
 
+    /**
+     * Récupère tous les articles.
+     * @return Une liste d'ArticleDTO représentant les articles trouvés
+     */
     public List<ArticleDTO> getAllArticles() {
         List<ArticleDTO> articles = new ArrayList<>();
         articleRepository.findAll().forEach(article -> {
@@ -40,6 +44,11 @@ public class ArticleService {
         return articles;
     }
 
+    /**
+     * Récupère un article par son ID. Si l'article n'existe pas, une exception ResourceNotFoundException est levée.
+     * @param id L'ID de l'article à récupérer
+     * @return Un ArticleDTO représentant l'article trouvé
+     */
     public ArticleDTO getArticleById(Integer id) {
         Optional<ArticleEntity> article = articleRepository.findById(id);
         if (article.isEmpty()) {
@@ -49,6 +58,11 @@ public class ArticleService {
         return toDTO(article.get());
     }
 
+    /**
+     * Crée un nouvel article à partir d'un CreateArticleDTO. Les dates de création et de mise à jour sont automatiquement définies à la date actuelle.
+     * @param articleDto Le DTO contenant les données de l'article à créer
+     * @return Le CreateArticleDTO représentant l'article créé
+     */
     public CreateArticleDTO createArticle(CreateArticleDTO articleDto) {
         articleDto.setCreatedAt(LocalDate.now().toString());
         articleDto.setUpdatedAt(LocalDate.now().toString());
@@ -56,6 +70,12 @@ public class ArticleService {
         return articleDto;
     }
 
+    /**
+     * Met à jour un article existant.
+     * @param id L'ID de l'article à mettre à jour
+     * @param articleDto Le DTO contenant les nouvelles données de l'article
+     * @return Le ArticleDTO représentant l'article mis à jour
+     */
     public ArticleDTO updateArticle(Integer id, CreateArticleDTO articleDto) {
         Optional<ArticleEntity> existingArticle = articleRepository.findById(id);
 
@@ -76,10 +96,19 @@ public class ArticleService {
 
     }
 
+    /**
+     * Supprime un article par son ID.
+     * @param id L'ID de l'article à supprimer
+     */
     public void deleteArticle(Integer id) {
         articleRepository.deleteById(id);
     }
 
+    /**
+     * Convertit un CreateArticleDTO en ArticleEntity.
+     * @param dto Le DTO à convertir
+     * @return L'entité correspondante
+     */
     private ArticleEntity toEntity(CreateArticleDTO dto) {
         ArticleEntity entity = new ArticleEntity();
         entity.setTitle(dto.getTitle());
@@ -100,6 +129,11 @@ public class ArticleService {
         return entity;
     }
 
+    /**
+     * Convertit un ArticleEntity en ArticleDTO.
+     * @param entity L'entité à convertir
+     * @return Le DTO correspondant
+     */
     private ArticleDTO toDTO(ArticleEntity entity) {
         ArticleDTO dto = new ArticleDTO();
         dto.setId(entity.getId());

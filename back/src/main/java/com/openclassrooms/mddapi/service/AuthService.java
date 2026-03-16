@@ -37,7 +37,11 @@ public class AuthService {
         this.jsonWebToken = jsonWebToken;
     }
 
-
+    /**
+     * Enregistre un nouvel utilisateur.
+     * @param userAuth Le DTO contenant les données de l'utilisateur à enregistrer
+     * @return Un TokenDTO contenant le token d'accès pour l'utilisateur enregistré
+     */
     public TokenDTO register(UserCreateDTO userAuth) {
         Optional<UserEntity> userExist = userRepo.findByEmail(userAuth.getEmail());
         if (userExist.isPresent()) {
@@ -62,7 +66,11 @@ public class AuthService {
         );
     }
 
-
+    /**
+     * Connecte un utilisateur existant.
+     * @param userAuth Le DTO contenant les données de connexion de l'utilisateur
+     * @return Un TokenDTO contenant le token d'accès pour l'utilisateur connecté
+     */
     public TokenDTO login(UserAuthDTO userAuth) {
         Optional<UserEntity> user = userRepo.findByEmailOrName(userAuth.getIdentifiant(), userAuth.getIdentifiant());
 
@@ -73,6 +81,11 @@ public class AuthService {
         return new TokenDTO(jsonWebToken.generateToken(user.get().getId().toString(), user.get().getName(), ACCESS_TOKEN_EXPIRATION));
     }
 
+    /**
+     * Récupère les informations de l'utilisateur connecté.
+     * @param email L'email de l'utilisateur
+     * @return Le DTO représentant les informations de l'utilisateur
+     */
     public UserDTO me(String email) {
         Optional<UserEntity> user = userRepo.findByEmail(email);
         if (user.isEmpty()) {
