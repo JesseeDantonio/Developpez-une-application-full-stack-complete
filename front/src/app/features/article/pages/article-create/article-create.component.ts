@@ -70,13 +70,11 @@ export class CreateArticleComponent implements OnInit {
     this.articleService.create(articleData).subscribe({
       next: (response) => {
         console.log('Article created successfully:', response);
-        this.goBack();
+        this.router.navigate(['/article']);
       },
       error: (error) => {
         console.error('Error creating article:', error);
       },
     });
-
-    this.router.navigate(['/article']);
   }
 }
