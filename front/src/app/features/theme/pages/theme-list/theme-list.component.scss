@@ -38,8 +38,9 @@ article {
 }
 
 @media (max-width: v.$breakpoint-mobile) {
-    #articles {
+    #themes {
         flex-direction: column;
+        flex-wrap: nowrap;
         max-width: 100%;
     }
 
