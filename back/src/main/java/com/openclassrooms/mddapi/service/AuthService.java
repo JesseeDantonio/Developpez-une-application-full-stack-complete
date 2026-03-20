@@ -4,17 +4,14 @@ import com.openclassrooms.mddapi.dto.in.UserCreateDTO;
 import com.openclassrooms.mddapi.dto.in.auth.UserAuthDTO;
 import com.openclassrooms.mddapi.dto.out.UserDTO;
 import com.openclassrooms.mddapi.dto.out.auth.TokenDTO;
-import com.openclassrooms.mddapi.entity.RefreshTokenEntity;
 import com.openclassrooms.mddapi.entity.UserEntity;
 import com.openclassrooms.mddapi.exception.ResourceAlreadyExistException;
 import com.openclassrooms.mddapi.exception.ResourceNotFoundException;
 import com.openclassrooms.mddapi.feature.JsonWebToken;
-import com.openclassrooms.mddapi.repository.RefreshTokenRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -22,10 +19,6 @@ import java.util.Optional;
 public class AuthService {
     // 15 min en ms
     long ACCESS_TOKEN_EXPIRATION = 15 * 60 * 1000;
-    // Refresh token : 14 jours
-    long REFRESH_TOKEN_EXPIRATION = 14 * 24 * 60 * 60 * 1000;
-    // Email verification : 1 heure
-    long EMAIL_VERIFICATION_EXPIRATION = 60 * 60 * 1000;
 
     private final UserRepository userRepo;
     private final PasswordEncoder passwordEncoder;
@@ -86,7 +79,7 @@ public class AuthService {
     public TokenDTO login(UserAuthDTO userAuth) {
         Optional<UserEntity> user = userRepo.findByEmailOrName(userAuth.getIdentifiant(), userAuth.getIdentifiant());
 
-        if (user.isEmpty()) {
+        if (user.isEmpty() || !passwordEncoder.matches(userAuth.getPassword(), user.get().getPassword())) {
             throw new RuntimeException("Identifiant ou mot de passe incorrect");
         }
 
