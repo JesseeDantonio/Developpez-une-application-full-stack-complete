@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private authService: AuthService) {
     this.registerForm = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(3)]],
+      name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', {
         validators: [Validators.required, this.passwordStrengthValidator()]
@@ -56,14 +56,6 @@ export class RegisterComponent implements OnInit {
     };
   }
 
-  get usernameErrors() {
-    return this.registerForm.get('username')?.errors;
-  }
-
-  get emailErrors() {
-    return this.registerForm.get('email')?.errors;
-  }
-
   get passwordErrors() {
     return this.registerForm.get('password')?.errors?.['passwordStrength'];
   }
@@ -76,7 +68,7 @@ export class RegisterComponent implements OnInit {
     const credentials: RegisterRequest = {
       email: this.registerForm.value.email,
       password: this.registerForm.value.password,
-      username: this.registerForm.value.username
+      name: this.registerForm.value.name
     };
 
     this.authService.register(credentials).subscribe({

@@ -7,7 +7,7 @@
                 <div>
                     <label for="name">Nom d'utilisateur</label>
                 </div>
-                <input type="text" id="username" name="user_username" formControlName="username" />
+                <input type="text" id="username" name="user_username" formControlName="name" />
             </li>
             <li>
                 <div>
@@ -24,11 +24,11 @@
         </ul>
 
 
-        @if (registerForm.get('username')?.invalid && (registerForm.get('username')?.touched ) ) {
-        @if (registerForm.get('username')?.hasError('required')) {
+        @if (registerForm.get('name')?.invalid && (registerForm.get('name')?.touched ) ) {
+        @if (registerForm.get('name')?.hasError('required')) {
         <span class="error-text">Le nom d'utilisateur est requis.</span>
         }
-        @if (registerForm.get('username')?.hasError('minlength')) {
+        @if (registerForm.get('name')?.hasError('minlength')) {
         <span class="error-text">Le nom d'utilisateur doit contenir au moins 3 caractères.</span>
         }
         }
