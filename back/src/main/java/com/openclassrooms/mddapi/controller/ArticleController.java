@@ -3,6 +3,7 @@ package com.openclassrooms.mddapi.controller;
 import com.openclassrooms.mddapi.dto.in.CreateArticleDTO;
 import com.openclassrooms.mddapi.dto.out.ArticleDTO;
 import com.openclassrooms.mddapi.service.ArticleService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/articles")
+@Tag(name = "Article", description = "Opérations sur les articles")
 public class ArticleController {
     private final ArticleService articleService;
 

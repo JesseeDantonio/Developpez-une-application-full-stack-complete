@@ -3,6 +3,7 @@ package com.openclassrooms.mddapi.controller;
 import com.openclassrooms.mddapi.dto.in.UserCreateDTO;
 import com.openclassrooms.mddapi.dto.out.UserDTO;
 import com.openclassrooms.mddapi.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
+@Tag(name = "Utilisateur", description = "Opérations sur les utilisateurs")
 public class UserController {
     private final UserService userService;
     // Route GET /api/users

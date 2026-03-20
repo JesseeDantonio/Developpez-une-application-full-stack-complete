@@ -3,6 +3,7 @@ package com.openclassrooms.mddapi.controller;
 import com.openclassrooms.mddapi.dto.in.CreateCommentDTO;
 import com.openclassrooms.mddapi.dto.out.CommentDTO;
 import com.openclassrooms.mddapi.service.CommentService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/comments")
+@Tag(name = "Commentaire", description = "Opérations sur les commentaires")
 public class CommentController {
     private final CommentService commentService;
 
