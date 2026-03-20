@@ -48,14 +48,15 @@ export class ThemeComponent {
       return;
     }
 
+    // Add themeId to loadingThemes set to indicate that the subscription process is in progress
     this.loadingThemes.add(Number(themeId));
 
     try {
       this.themeService.subscribe(Number(themeId)).subscribe(() => {
         const theme = this.themes.find((t) => t.id == themeId);
         if (theme) {
-          theme.isSubscribed = true;
           this.loadingThemes.delete(Number(themeId));
+          theme.isSubscribed = true;
         }
       });
     }
@@ -63,6 +64,7 @@ export class ThemeComponent {
       console.error('Error subscribing to theme', e);
     }
     finally {
+      // Remove themeId from loadingThemes set to indicate that the subscription process has completed, regardless of success or failure
       this.loadingThemes.delete(Number(themeId));
     }
   }
@@ -80,8 +82,8 @@ export class ThemeComponent {
       this.themeService.unsubscribe(Number(themeId)).subscribe(() => {
         const theme = this.themes.find((t) => t.id == themeId);
         if (theme) {
-          theme.isSubscribed = false;
           this.loadingThemes.delete(Number(themeId));
+          theme.isSubscribed = false;
         }
       });
     } catch (e) {
