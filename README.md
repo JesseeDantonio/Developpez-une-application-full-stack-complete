@@ -97,6 +97,6 @@ Une fois les deux serveurs lancés, vous pouvez accéder à :
 
 - L'application Web (Front-end) : http://localhost:4200
     
-- L'API (Back-end) : http://localhost:8080/api
+- L'API (Back-end) : http://localhost:8081/api
     
 - Documentation Swagger UI : http://localhost:8081/swagger-ui.html
