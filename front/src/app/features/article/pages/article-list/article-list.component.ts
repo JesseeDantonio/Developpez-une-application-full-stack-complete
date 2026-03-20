@@ -5,7 +5,7 @@ import { UserService } from 'src/app/features/user/services/user.service';
 import { Article } from 'src/app/core/models/article.model';
 import { ThemeService } from 'src/app/features/theme/services/theme.service';
 import { TokenService } from 'src/app/core/services/token.service';
-import { Payload } from 'src/app/core/models/payload.interface';
+import { Payload } from 'src/app/core/models/payload.model';
 
 @Component({
   selector: 'app-article',

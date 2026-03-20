@@ -1,7 +1,7 @@
 // core/services/api.service.ts
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Resource } from "./../models/ressource.interface"
+import { Resource } from "../models/ressource.model"
 
 // On utilise <T> pour dire "Ce service marche avec n'importe quel type T"
 export abstract class ApiService<T extends Resource> {

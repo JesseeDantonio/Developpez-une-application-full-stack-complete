@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ThemeService } from '../../services/theme.service';
 import { TokenService } from 'src/app/core/services/token.service';
-import { Theme } from 'src/app/core/models/theme.interface';
+import { Theme } from 'src/app/core/models/theme.model';
 
 @Component({
   selector: 'app-theme',
