@@ -6,8 +6,8 @@ import {
   AuthResponse,
   LoginRequest,
   RegisterRequest,
-} from '../../models/auth.model';
-import { TokenService } from '../token.service';
+} from '../../../core/models/auth.model';
+import { TokenService } from '../../../core/services/token.service';
 
 @Injectable({
   providedIn: 'root',

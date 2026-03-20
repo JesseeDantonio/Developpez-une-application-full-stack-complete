@@ -3,7 +3,7 @@ import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { map } from 'rxjs';
-import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { AuthService } from 'src/app/features/auth/services/auth.service';
 
 @Component({
   selector: 'app-auth-layout',
