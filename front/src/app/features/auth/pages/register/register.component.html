@@ -23,10 +23,21 @@
             </li>
         </ul>
 
+
+        @if (registerForm.get('username')?.invalid && (registerForm.get('username')?.touched ) ) {
+        @if (registerForm.get('username')?.hasError('required')) {
+        <span class="error-text">Le nom d'utilisateur est requis.</span>
+        }
+        @if (registerForm.get('username')?.hasError('minlength')) {
+        <span class="error-text">Le nom d'utilisateur doit contenir au moins 3 caractères.</span>
+        }
+        }
+
+
         @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
-            @if (registerForm.get('email')?.hasError('email')) {
-            <span class="error-text">Le format de l'email est invalide.</span>
-            }
+        @if (registerForm.get('email')?.hasError('email')) {
+        <span class="error-text">Le format de l'email est invalide.</span>
+        }
         }
 
         @if (registerForm.get('password')?.hasError('passwordStrength')) {

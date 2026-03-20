@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { RegisterRequest } from 'src/app/core/models/auth.model';
-import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { AuthService } from 'src/app/features/auth/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private authService: AuthService) {
     this.registerForm = this.fb.group({
-      username: ['', Validators.required],
+      username: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', {
         validators: [Validators.required, this.passwordStrengthValidator()]
@@ -54,6 +54,14 @@ export class RegisterComponent implements OnInit {
       }
       return null; // Le mot de passe est valide
     };
+  }
+
+  get usernameErrors() {
+    return this.registerForm.get('username')?.errors;
+  }
+
+  get emailErrors() {
+    return this.registerForm.get('email')?.errors;
   }
 
   get passwordErrors() {
