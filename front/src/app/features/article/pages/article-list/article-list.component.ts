@@ -6,6 +6,7 @@ import { Article } from 'src/app/core/models/article.model';
 import { ThemeService } from 'src/app/features/theme/services/theme.service';
 import { TokenService } from 'src/app/core/services/token.service';
 import { Payload } from 'src/app/core/models/payload.model';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-article',
@@ -36,7 +37,7 @@ export class ArticleComponent implements OnInit {
 
   toggleSortOrder() {
     this.sortByAsc = !this.sortByAsc;
-
+    
     if (this.sortByAsc) {
       this.articles = this.sortByDateAsc(this.articles);
     } else {
@@ -52,31 +53,44 @@ export class ArticleComponent implements OnInit {
       return;
     }
 
-    this.articleService.getAll().subscribe((articles) => {
-      this.userService.getAll().subscribe((users) => {
-        for (let article of articles) {
+// forkJoin permet d'exécuter plusieurs requêtes en parallèle et d'attendre leurs résultats
+    forkJoin({
+      articles: this.articleService.getAll(),
+      users: this.userService.getAll(),
+      themes: this.themeService.getSubscribedThemes(payload.sub)
+    }).subscribe({
+      next: (result) => {
+        const tempArticles: Article[] = [];
 
-          this.themeService.getSubscribedThemes(payload.sub).subscribe((themes) => {
-            if (themes.some((t) => article.themeIds.includes(t.id))) {
-              const user = users.find((u) => u.id === article.userId as unknown as number);
-              if (user) {
-                this.articles.push({
-                  id: article.id,
-                  title: article.title,
-                  content: article.content,
-                  userId: article.userId,
-                  createdAt: article.createdAt,
-                  updatedAt: article.updatedAt,
-                  themeIds: article.themeIds,
-                  userName: user.name
-                })
-              }
+        // On parcourt les articles récupérés
+        for (let article of result.articles) {
+          // On vérifie si l'article correspond à un thème souscrit
+          const hasMatchingTheme = result.themes.some((t) => article.themeIds.includes(t.id));
+          
+          if (hasMatchingTheme) {
+            const user = result.users.find((u) => u.id === article.userId as unknown as number);
+            
+            if (user) {
+              tempArticles.push({
+                id: article.id,
+                title: article.title,
+                content: article.content,
+                userId: article.userId,
+                createdAt: article.createdAt,
+                updatedAt: article.updatedAt,
+                themeIds: article.themeIds,
+                userName: user.name
+              });
             }
-          });
+          }
         }
-      });
-      if (this.sortByAsc) {
-        this.articles = this.sortByDateAsc(this.articles);
+
+        // On assigne le tableau final TRIÉ à this.articles
+        // Le tri se fait de manière garantie APRES avoir construit tout le tableau
+        this.articles = this.sortByDateAsc(tempArticles);
+      },
+      error: (err) => {
+        console.error('Erreur lors de la récupération des données', err);
       }
     });
   }
