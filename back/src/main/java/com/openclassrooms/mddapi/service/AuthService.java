@@ -48,6 +48,18 @@ public class AuthService {
             throw new ResourceAlreadyExistException("User already exist");
         }
 
+        if (userAuth.getPassword().isEmpty() || userAuth.getPassword().length() < 8) {
+            throw new RuntimeException("Password must be at least 8 characters long");
+        }
+
+        if (userAuth.getName().isEmpty() || userAuth.getName().length() < 3) {
+            throw new RuntimeException("Name must be at least 3 characters long");
+        }
+
+        if (userAuth.getEmail().isEmpty()) {
+            throw new RuntimeException("Email must not be empty");
+        }
+
         userAuth.setEmail(userAuth.getEmail());
         userAuth.setName(userAuth.getName());
         userAuth.setPassword(passwordEncoder.encode(userAuth.getPassword()));
