@@ -4,6 +4,7 @@ import com.openclassrooms.mddapi.dto.in.CreateThemeDTO;
 import com.openclassrooms.mddapi.dto.out.ThemeDTO;
 import com.openclassrooms.mddapi.feature.JsonWebToken;
 import com.openclassrooms.mddapi.service.ThemeService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/themes")
+@Tag(name = "Thème", description = "Opérations sur les thèmes et leurs abonnements")
 public class ThemeController {
     private final ThemeService themeService;
 
