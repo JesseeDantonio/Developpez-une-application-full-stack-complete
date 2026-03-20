@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Payload } from "../models/payload.interface";
+import { Payload } from "../models/payload.model";
 
 @Injectable({
     providedIn: 'root',

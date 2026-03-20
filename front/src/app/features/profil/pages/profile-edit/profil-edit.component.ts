@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RegisterRequest } from 'src/app/core/models/auth.model';
-import { Payload } from 'src/app/core/models/payload.interface';
-import { Theme } from 'src/app/core/models/theme.interface';
+import { Payload } from 'src/app/core/models/payload.model';
+import { Theme } from 'src/app/core/models/theme.model';
 import { TokenService } from 'src/app/core/services/token.service';
 import { ThemeService } from 'src/app/features/theme/services/theme.service';
 import { UserService } from 'src/app/features/user/services/user.service';

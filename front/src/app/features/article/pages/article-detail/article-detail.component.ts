@@ -7,7 +7,7 @@ import { ThemeService } from 'src/app/features/theme/services/theme.service';
 import { CommentService } from 'src/app/features/comments/services/comment.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Comment } from 'src/app/core/models/comment.model';
-import { Payload } from 'src/app/core/models/payload.interface';
+import { Payload } from 'src/app/core/models/payload.model';
 import { TokenService } from 'src/app/core/services/token.service';
 
 @Component({

@@ -12,7 +12,7 @@ import { ThemeService } from 'src/app/features/theme/services/theme.service';
 import { ThemeDto } from 'src/app/core/dto/in/ThemeDto';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
-import { Payload } from 'src/app/core/models/payload.interface';
+import { Payload } from 'src/app/core/models/payload.model';
 import { TokenService } from 'src/app/core/services/token.service';
 
 @Component({
